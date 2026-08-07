@@ -1,0 +1,188 @@
+<section class="flex flex-col gap-5 rounded-2xl border border-gray-100 p-6 shadow-sm">
+  <!-- badges -->
+  <div class="flex items-center gap-2">
+    <!-- category page -->
+    <a
+      [routerLink]="['/categories', productDetails().category._id]"
+      class="text-primary-600 bg-primary-100/50 hover:bg-primary-200 cursor-pointer rounded-full px-3 py-1 text-xs font-semibold transition"
+    >
+      {{ productDetails().category.name }}
+    </a>
+    <!-- brand -->
+    <span class="text-secondary-500 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold">
+      {{ productDetails().brand.name }}
+    </span>
+  </div>
+
+  <!-- Title -->
+  <h1 class="text-secondary-900 text-2xl font-extrabold">{{ productDetails().title }}</h1>
+
+  <!-- Rating -->
+  <div class="flex items-center gap-2">
+    <div class="flex items-center gap-0.5 text-yellow-400">
+      @for (item of [1, 2, 3, 4, 5]; track $index) {
+        @if (productDetails().ratingsAverage > $index + 1) {
+          <i class="fa-solid fa-star"></i>
+        } @else if (
+          productDetails().ratingsAverage > $index && $index + 1 > productDetails().ratingsAverage
+        ) {
+          <i class="fa-solid fa-star-half-stroke"></i>
+        } @else {
+          <i class="fa-regular fa-star text-gray-300"></i>
+        }
+      }
+    </div>
+    <span class="text-sm text-gray-500">
+      {{ productDetails().ratingsAverage }} ({{ productDetails().ratingsQuantity }} reviews)</span
+    >
+  </div>
+
+  <!-- Price -->
+  <p class="flex items-center gap-5 text-2xl font-bold">
+    @if (productDetails().priceAfterDiscount) {
+      <span class="text-secondary-900"> {{ productDetails().priceAfterDiscount }} EGP </span>
+
+      <span class="text-secondary-400 text-xl font-normal line-through">
+        {{ productDetails().price }} EGP
+      </span>
+
+      <span class="rounded-full bg-red-500 px-3 py-1 text-sm font-semibold text-white">
+        save {{ productDetails().price | discount: productDetails().priceAfterDiscount! }}%
+      </span>
+    } @else {
+      <span class="text-secondary-900"> {{ productDetails().price }} EGP </span>
+    }
+  </p>
+
+  <!--  Stock Badge -->
+  @if (productDetails().quantity > 0) {
+    <span
+      class="flex w-fit items-center gap-1.5 rounded-full border border-green-100 bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-600"
+    >
+      <span class="block h-1.5 w-1.5 rounded-full bg-green-500"></span> In Stock
+    </span>
+  } @else {
+    <span
+      class="flex w-fit items-center gap-1.5 rounded-full border border-red-100 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-600"
+    >
+      <span class="block h-1.5 w-1.5 rounded-full bg-red-500"></span> Out OF Stock
+    </span>
+  }
+
+  <!-- Divider -->
+  <section class="flex flex-col gap-5 border-t border-gray-100 pt-5">
+    <!-- Description -->
+    <p class="text-secondary-500">
+      {{ productDetails().description.replaceAll('\t', ' ') }}
+    </p>
+
+    <!-- Quantity -->
+    <div class="flex flex-col gap-2">
+      <label class="text-secondary-700 text-sm font-semibold">Quantity</label>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center overflow-hidden rounded-lg border border-gray-200">
+          <button
+            (click)="onSetProductQuantity(-1, 'add')"
+            class="flex h-10 w-10 cursor-pointer items-center justify-center text-gray-500 transition hover:bg-gray-100"
+          >
+            <i class="fa-solid fa-minus text-xs"></i>
+          </button>
+
+          <input
+            #productQuantity
+            (input)="onSetProductQuantity(+productQuantity.value, 'replace')"
+            [formControl]="productQuantityInput"
+            type="number"
+            [value]="1"
+            [min]="0"
+            [max]="productDetails().quantity"
+            class="text-secondary-800 border-0 ps-3.5 pe-0 text-center text-sm font-semibold"
+          />
+
+          <button
+            (click)="onSetProductQuantity(1, 'add')"
+            class="flex h-10 w-10 cursor-pointer items-center justify-center text-gray-500 transition hover:bg-gray-100"
+          >
+            <i class="fa-solid fa-plus text-xs"></i>
+          </button>
+        </div>
+        <span class="text-sm text-gray-400">
+          {{ productDetails().quantity }} <span class="hidden md:block">available</span></span
+        >
+      </div>
+    </div>
+
+    <!-- Total Price -->
+    <div class="flex items-center justify-between rounded-xl bg-gray-50 px-5 py-3">
+      <span class="text-sm font-medium text-gray-500">Total Price:</span>
+      <p class="text-primary-500 text-lg font-extrabold">
+        {{ totalPrice() | number: '1.2-2' }} EGP
+      </p>
+    </div>
+
+    <!-- Add to Cart + Buy Now -->
+    <div class="flex gap-3">
+      <button
+        (click)="onAddProductToCart()"
+        class="bg-primary-500 hover:bg-primary-600 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition duration-300"
+      >
+        @if (idAddingToCart()) {
+          <i class="fa-solid fa-spinner fa-spin text-sm"></i>
+        } @else if (isAddingToCartDone()) {
+          <i class="fa-solid fa-check text-sm"></i> Added to Cart
+        } @else {
+          <i class="fa-solid fa-cart-shopping text-sm"></i> Add to Cart
+        }
+      </button>
+    </div>
+
+    <!-- Add to Wishlist + Share -->
+    <div class="flex gap-3">
+      <button
+        (click)="onAddProductToWishlist()"
+        [class]="
+          isAddedToWishlist()
+            ? 'border-red-200 bg-red-100/60 text-red-600'
+            : 'hover:border-primary-400 hover:text-primary-500 border-gray-200 text-gray-600'
+        "
+        class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border py-3 font-semibold transition duration-300"
+      >
+        @if (isAddingToWishlist()) {
+          <i class="fa-solid fa-spinner fa-spin text-sm"></i>
+        } @else if (isAddedToWishlist()) {
+          <i class="fa-solid fa-heart text-sm"></i>
+        } @else {
+          <i class="fa-regular fa-heart text-sm"></i>
+        }
+        @if (isAddedToWishlist()) {
+          In Wishlist
+        } @else {
+          Add to Wishlist
+        }
+      </button>
+
+      <button
+        class="hover:border-primary-400 hover:text-primary-500 flex h-12 w-12 cursor-pointer items-center justify-center rounded-xl border border-gray-200 text-gray-500 transition duration-300"
+      >
+        <i class="fa-solid fa-share-nodes text-sm"></i>
+      </button>
+    </div>
+  </section>
+
+  <footer class="flex flex-wrap items-center justify-between gap-3 pt-2">
+    @for (badge of badges; track $index) {
+      <div class="flex items-center gap-3">
+        <div
+          class="bg-primary-100/50 border-primary-200 flex h-10 w-10 items-center justify-center rounded-full border"
+        >
+          <i [class]="badge.icon" class="fa-solid fa-truck-fast text-primary-500 text-sm"></i>
+        </div>
+
+        <div>
+          <p class="text-secondary-700 text-sm font-semibold">{{ badge.title }}</p>
+          <p class="text-xs text-gray-400">{{ badge.text }}</p>
+        </div>
+      </div>
+    }
+  </footer>
+</section>

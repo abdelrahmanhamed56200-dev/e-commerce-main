@@ -1,0 +1,9 @@
+<a
+  [routerLink]="['/categories', category()._id]"
+  class="flex h-full cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border border-gray-200 p-4 shadow-sm transition hover:shadow-md"
+>
+  <div class="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full">
+    <img class="h-20 w-20 object-cover" [src]="category().image" [alt]="category().name" />
+  </div>
+  <span class="text-secondary-700 text-center text-sm font-medium">{{ category().name }}</span>
+</a>

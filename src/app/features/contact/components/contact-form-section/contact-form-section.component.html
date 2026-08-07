@@ -1,0 +1,202 @@
+<section>
+  <div class="flex flex-col gap-6 rounded-2xl border border-gray-100 p-6 shadow">
+    <!-- Header -->
+    <div class="flex items-center gap-3">
+      <div class="bg-primary-100/50 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
+        <i class="fa-solid fa-headset text-primary-500"></i>
+      </div>
+      <div>
+        <p class="text-secondary-800 font-bold">Send us a Message</p>
+        <p class="text-secondary-400 text-xs">Fill out the form and we'll get back to you</p>
+      </div>
+    </div>
+    <!-- Form Card -->
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+      <!-- Full Name + Email -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <!-- Full Name -->
+        <div class="flex flex-col gap-1.5">
+          @let nameControl = contactForm.get('fullName');
+          <label
+            [class]="
+              nameControl?.touched && nameControl?.valid
+                ? 'text-green-500! peer-focus:text-green-500!'
+                : nameControl?.touched && nameControl?.invalid
+                  ? 'text-danger-500! peer-focus:text-danger-500!'
+                  : ''
+            "
+            class="text-secondary-700 text-sm font-semibold"
+            >Full Name</label
+          >
+          <input
+            type="text"
+            placeholder="John Doe"
+            formControlName="fullName"
+            [class]="
+              nameControl?.touched && nameControl?.valid
+                ? 'border-green-500! focus:border-green-500'
+                : nameControl?.touched && nameControl?.invalid
+                  ? 'border-danger-500! focus:border-danger-500'
+                  : ''
+            "
+            class="text-secondary-600 focus:border-primary-400 rounded-xl border border-gray-200 px-4 py-2.5 text-sm placeholder-gray-300 transition outline-none focus:ring-0"
+          />
+          @for (
+            error of [
+              { error: 'required', message: '*Full Name is required' },
+              { error: 'minLength', message: '*Minimum 3 characters required' },
+            ];
+            track error.error
+          ) {
+            @if (nameControl?.touched && nameControl?.errors?.[error.error]) {
+              <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+                {{ error.message }}
+              </p>
+            }
+          }
+        </div>
+
+        <!-- email -->
+        <div class="flex flex-col gap-1.5">
+          @let emailControl = contactForm.get('email');
+          <label
+            [class]="
+              emailControl?.touched && emailControl?.valid
+                ? 'text-green-500! peer-focus:text-green-500!'
+                : emailControl?.touched && emailControl?.invalid
+                  ? 'text-danger-500! peer-focus:text-danger-500!'
+                  : ''
+            "
+            class="text-secondary-700 text-sm font-semibold"
+            >Email Address</label
+          >
+          <input
+            type="email"
+            placeholder="john@example.com"
+            formControlName="email"
+            [class]="
+              emailControl?.touched && emailControl?.valid
+                ? 'border-green-500! focus:border-green-500'
+                : emailControl?.touched && emailControl?.invalid
+                  ? 'border-danger-500! focus:border-danger-500'
+                  : ''
+            "
+            class="text-secondary-600 focus:border-primary-400 rounded-xl border border-gray-200 px-4 py-2.5 text-sm placeholder-gray-300 transition outline-none focus:ring-0"
+          />
+          @for (
+            error of [
+              { error: 'required', message: '*Email is required' },
+              { error: 'minLength', message: '*Invalid email' },
+            ];
+            track error.error
+          ) {
+            @if (emailControl?.touched && emailControl?.errors?.[error.error]) {
+              <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+                {{ error.message }}
+              </p>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Subject -->
+      <div class="flex flex-col gap-1.5">
+        @let subjectControl = contactForm.get('subject');
+        <label
+          [class]="
+            subjectControl?.touched && subjectControl?.valid
+              ? 'text-green-500! peer-focus:text-green-500!'
+              : subjectControl?.touched && subjectControl?.invalid
+                ? 'text-danger-500! peer-focus:text-danger-500!'
+                : ''
+          "
+          class="text-secondary-700 text-sm font-semibold"
+          >Subject</label
+        >
+        <select
+          formControlName="subject"
+          [class]="
+            subjectControl?.touched && subjectControl?.valid
+              ? 'border-green-500 focus:border-green-500'
+              : subjectControl?.touched && subjectControl?.invalid
+                ? 'border-danger-500! focus:border-danger-500'
+                : ''
+          "
+          class="text-secondary-600 focus:border-primary-400 rounded-xl border border-gray-200 px-4 py-2.5 text-sm transition outline-none focus:ring-0"
+        >
+          <option value="" disabled selected>Select a subject</option>
+          <option>General Inquiry</option>
+          <option>Order Support</option>
+          <option>Shipping Question</option>
+          <option>Returns & Refunds</option>
+          <option>Product Information</option>
+          <option>Feedback & Suggestions</option>
+          <option>Other</option>
+        </select>
+        @for (
+          error of [{ error: 'required', message: '*please select a subject' }];
+          track error.error
+        ) {
+          @if (subjectControl?.touched && subjectControl?.errors?.[error.error]) {
+            <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+              {{ error.message }}
+            </p>
+          }
+        }
+      </div>
+
+      <!-- Message -->
+      <div class="flex flex-col gap-1.5">
+        @let messageControl = contactForm.get('message');
+        <label
+          [class]="
+            messageControl?.touched && messageControl?.valid
+              ? 'text-green-500! peer-focus:text-green-500!'
+              : messageControl?.touched && messageControl?.invalid
+                ? 'text-danger-500! peer-focus:text-danger-500!'
+                : ''
+          "
+          class="text-secondary-700 text-sm font-semibold"
+          >Message</label
+        >
+        <textarea
+          formControlName="message"
+          rows="6"
+          placeholder="How can we help you?"
+          [class]="
+            messageControl?.touched && messageControl?.valid
+              ? 'border-green-500! focus:border-green-500'
+              : messageControl?.touched && messageControl?.invalid
+                ? 'border-danger-500! focus:border-danger-500'
+                : ''
+          "
+          class="text-secondary-600 focus:border-primary-400 resize-none rounded-xl border border-gray-200 px-4 py-2.5 text-sm placeholder-gray-300 transition outline-none focus:ring-0"
+        ></textarea>
+        @for (
+          error of [{ error: 'required', message: '*please write a message' }];
+          track error.error
+        ) {
+          @if (messageControl?.touched && messageControl?.errors?.[error.error]) {
+            <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+              {{ error.message }}
+            </p>
+          }
+        }
+      </div>
+
+      <!-- Submit -->
+      <button
+        class="bg-primary-500 hover:bg-primary-600 flex w-fit items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-white transition duration-300"
+      >
+        @if (isLoading()) {
+          <i class="fa-solid fa-spinner animate-spin text-sm"></i> Sending...
+        } @else {
+          <i class="fa-solid fa-paper-plane text-sm"></i> Send Message
+        }
+      </button>
+    </form>
+  </div>
+
+  <!--  Help Center Banner -->
+  <app-contact-help-center-banner />
+</section>

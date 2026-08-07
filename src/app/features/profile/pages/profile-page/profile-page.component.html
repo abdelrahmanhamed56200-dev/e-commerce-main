@@ -1,0 +1,17 @@
+<app-breadcrumbs-card
+  [iconConfig]="{ type: 'icon', value: 'fa-solid fa-user' }"
+  title="My Account"
+  description="Manage your addresses and account settings"
+  pageTitle="My Account"
+/>
+
+<section class="container grid min-h-screen w-full gap-10 px-5 py-10 lg:grid-cols-[3fr_9fr]">
+  <!-- Sidebar  -->
+  <div>
+    <app-profile-sidebar />
+  </div>
+
+  <div>
+    <router-outlet />
+  </div>
+</section>

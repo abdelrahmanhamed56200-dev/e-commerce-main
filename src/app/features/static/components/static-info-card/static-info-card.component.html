@@ -1,0 +1,48 @@
+<div
+  class="group h-full rounded-2xl border border-gray-200 p-6 shadow-sm transition hover:shadow-xl"
+>
+  <!-- Header -->
+  <div class="mb-4 flex items-center gap-3">
+    <div
+      class="bg-primary-100 text-primary-600 group-hover:bg-primary-600 group-hover:text-primary-100 rounded-xl p-3 transition duration-300"
+    >
+      <i [class]="art().icon"></i>
+    </div>
+
+    <div>
+      <p class="text-primary-600 text-sm font-semibold uppercase">Article {{ articleId() }}</p>
+      <h3 class="text-xl font-bold text-gray-900">{{ art().title }}</h3>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <ul class="space-y-3 text-sm leading-relaxed text-gray-700">
+    @for (section of art().sections; track $index) {
+      <li class="flex items-start gap-2">
+        @if (art().sections.length > 1) {
+          <span
+            class="bg-primary-100 text-primary-600 rounded-md px-2 py-0.5 text-xs font-semibold"
+          >
+            {{ articleId() }}.{{ $index + 1 }}
+          </span>
+        }
+        <p>
+          @if (section.title) {
+            <span class="font-semibold">{{ section.title }}</span>
+          }
+          @let processed = getProcessedSection(section.content);
+          {{ processed.before }}
+          @if (processed.email) {
+            <a
+              href="mailto:{{ processed.email }}"
+              class="text-primary-600 font-bold transition duration-300 hover:underline"
+            >
+              {{ processed.email }}
+            </a>
+          }
+          {{ processed.after }}
+        </p>
+      </li>
+    }
+  </ul>
+</div>

@@ -1,0 +1,6 @@
+@for (prod of wishlistProducts(); track prod._id) {
+  <app-wishlist-card [wishlistProduct]="prod" />
+} @empty {
+  <app-wishlist-card-skelton />
+  <app-wishlist-card-skelton />
+}

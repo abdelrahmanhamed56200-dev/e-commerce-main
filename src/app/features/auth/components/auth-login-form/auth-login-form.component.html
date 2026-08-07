@@ -1,0 +1,58 @@
+<form [formGroup]="loginForm" class="flex flex-col gap-5">
+  <!-- email -->
+  <app-auth-input
+    formControlName="email"
+    inputType="email"
+    label="Email Address"
+    inputId="email"
+    [control]="loginForm.get('email')"
+    [autocomplete]="true"
+    [errors]="[
+      { error: 'required', message: '*Email is required' },
+      { error: 'email', message: '*Invalid email address' },
+    ]"
+  />
+
+  <!-- password -->
+  <div class="flex flex-col gap-2">
+    <app-auth-input
+      formControlName="password"
+      inputType="password"
+      label="Password"
+      inputId="password"
+      [control]="loginForm.get('password')"
+      [autocomplete]="true"
+      [errors]="[
+        { error: 'required', message: '*Password is required' },
+        { error: 'minLength', message: '*Password must be at least 8 characters' },
+      ]"
+    />
+    <div
+      [class]="
+        loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? '-mt-6' : ''
+      "
+    >
+      <div class="flex justify-end">
+        <a
+          routerLink="/forgotPassword"
+          class="text-primary-500 hover:text-primary-600 cursor-pointer text-xs font-medium"
+          >Forgot Password?</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Keep me signed in -->
+  <label class="flex cursor-pointer items-center gap-2">
+    <input type="checkbox" formControlName="rememberMe" class="h-4 w-4" />
+    <span class="text-secondary-600 text-sm">Keep me signed in</span>
+  </label>
+
+  <!-- Sign In Button -->
+  <app-auth-submit-button
+    text="Sign In"
+    type="submit"
+    [isLoading]="isLoading()"
+    (onSubmit)="onSubmit()"
+  />
+</form>

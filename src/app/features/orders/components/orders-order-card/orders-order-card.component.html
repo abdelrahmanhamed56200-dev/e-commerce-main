@@ -1,0 +1,32 @@
+<div
+  [class]="isOpen() ? 'border-primary-500 shadow-primary-300 shadow-2xl' : 'border-gray-100'"
+  class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-colors duration-300"
+>
+  <!-- Order Header -->
+  <app-orders-order-header [order]="order()" />
+
+  <!-- Price & Toggle -->
+  <app-orders-order-price-toggle
+    [totalPrice]="order().totalOrderPrice"
+    (onToggle)="onToggle($event)"
+  />
+
+  <div [class]="isOpen() ? 'block' : 'hidden'" class="transition-all duration-300">
+    <!-- Order Items -->
+    <app-orders-order-items [cartItems]="order().cartItems" />
+
+    <!-- Delivery & Summary -->
+    <div class="grid grid-cols-1 gap-4 px-4 pb-4 md:grid-cols-2">
+      <!-- Delivery Address -->
+      <app-orders-order-delivery-address [shippingAddress]="order().shippingAddress" />
+
+      <!-- Order Summary -->
+      <app-orders-order-delivery-summary
+        [shippingPrice]="order().shippingPrice"
+        [taxPrice]="order().taxPrice"
+        [totalOrderPrice]="order().totalOrderPrice"
+        [paymentMethodType]="order().paymentMethodType"
+      />
+    </div>
+  </div>
+</div>

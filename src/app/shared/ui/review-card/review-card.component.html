@@ -1,0 +1,75 @@
+<div class="relative rounded-2xl border border-gray-100 p-5 shadow-sm transition hover:shadow-md">
+  <div class="mb-3 flex items-start justify-between">
+    <div>
+      <h3 class="text-secondary-900 text-base leading-snug font-semibold">
+        {{ review().user.name }}
+      </h3>
+      <p class="text-xs text-gray-400">{{ review().createdAt | date }}</p>
+    </div>
+
+    <div class="flex items-start gap-3">
+      <!-- Dropdown -->
+      @if (isLogged() && isMyReview()) {
+        <div class="relative">
+          <button (click)="onToggleDropdown()" class="text-gray-500 hover:text-gray-800">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+
+          <div
+            [class]="isDropdownOpen() ? 'unenviable opacity-100' : 'invisible opacity-0'"
+            class="absolute top-2 right-2 z-10 mt-2 w-28 overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition"
+          >
+            <button
+              (click)="[onEditRevBtn(), onCloseDropdown()]"
+              class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100"
+            >
+              Edit
+            </button>
+            <button
+              (click)="[onDeleteRev(), onCloseDropdown()]"
+              class="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      }
+
+      @if (!isEditing()) {
+        <div class="flex items-center gap-1 rounded-full px-2 py-1 text-yellow-400">
+          @for (item of [1, 2, 3, 4, 5]; track $index) {
+            @if (review().rating >= $index + 1) {
+              <i class="fa-solid fa-star"></i>
+            } @else if (review().rating > $index && $index + 1 > review().rating) {
+              <i class="fa-solid fa-star-half-stroke"></i>
+            } @else {
+              <i class="fa-regular fa-star text-gray-300"></i>
+            }
+          }
+
+          <p class="text-secondary-600 ml-1 text-xs">{{ review().rating }}.0</p>
+        </div>
+      }
+    </div>
+  </div>
+  @if (!isEditing()) {
+    <p class="text-secondary-600 text-sm leading-relaxed">{{ review().review }}</p>
+  }
+
+  @if (isEditing()) {
+    <app-create-edit-review
+      [selectedRat]="review().rating"
+      [text]="review().review"
+      (onCancel)="onCancelEdit()"
+      (onSubmit)="onSubmitEdit($event)"
+    />
+  }
+  @if (isDeleting()) {
+    <p class="absolute inset-0 flex items-center justify-center bg-gray-100/50">Deleting.....</p>
+  }
+  @if (isUpdating()) {
+    <p class="absolute inset-0 flex items-center justify-center gap-3 bg-gray-100/50">
+      Updating<i class="fa-solid fa-spinner fa-spin"></i>
+    </p>
+  }
+</div>

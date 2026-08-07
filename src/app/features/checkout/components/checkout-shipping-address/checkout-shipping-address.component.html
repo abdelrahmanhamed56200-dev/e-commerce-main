@@ -1,0 +1,183 @@
+<div class="mb-5 overflow-hidden rounded-2xl border border-gray-100 shadow-sm">
+  <!-- Header -->
+  <div class="bg-primary-500 px-5 py-4">
+    <h3 class="flex items-center gap-2 text-base font-bold text-white">
+      <i class="fa-solid fa-house"></i> Shipping Address
+    </h3>
+    <p class="mt-0.5 text-white/80">Where should we deliver your order?</p>
+  </div>
+
+  <!-- Body -->
+  <div class="flex flex-col gap-4 px-5 py-5">
+    <!-- Saved Addresses -->
+
+    <!-- Saved Address Card -->
+    @if (userAddresses().length > 0) {
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+          <span class="bg-primary-500 block h-3 w-3 rounded-sm"></span>
+          <p class="text-secondary-700 font-bold">Saved Addresses</p>
+        </div>
+        <p class="text-secondary-400 text-sm">Select a saved address or enter a new one below</p>
+      </div>
+
+      @for (address of userAddresses(); track address._id) {
+        <app-checkout-saved-address-button
+          [address]="address"
+          [activeId]="activeId()"
+          (onClick)="setAddressToForm($event)"
+        />
+      }
+
+      <!-- Use Different Address -->
+      <app-checkout-use-different-address-button
+        [activeId]="activeId()"
+        (onClick)="setAddressToForm($event)"
+      />
+    }
+    <!-- Delivery Info Banner -->
+    <div class="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
+      <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100">
+        <i class="fa-solid fa-circle-info text-sm text-blue-500"></i>
+      </div>
+      <div>
+        <p class="text-sm font-bold text-blue-700">Delivery Information</p>
+        <p class="text-xs text-blue-400">
+          @if (activeId() === null) {
+            Please ensure your address is accurate for smooth delivery
+          } @else {
+            Using your saved address. You can edit the details below if needed.
+          }
+        </p>
+      </div>
+    </div>
+
+    <form [formGroup]="addressForm()" class="flex flex-col gap-4">
+      <!-- City -->
+      <div class="flex flex-col gap-1.5">
+        @let cityControl = addressForm().get('city');
+        <label class="text-secondary-700 text-sm font-semibold"
+          >City <span class="text-red-400">*</span></label
+        >
+        <div
+          [class]="
+            cityControl?.touched && cityControl?.valid
+              ? 'border-green-500! focus:border-green-500!'
+              : cityControl?.touched && cityControl?.invalid
+                ? 'border-danger-500! focus:border-danger-500!'
+                : ''
+          "
+          class="focus-within:border-primary-400 flex items-center rounded-xl border border-gray-200 px-4 py-2.5 transition"
+        >
+          <i class="fa-solid fa-city text-secondary-400 mr-2 text-sm"></i>
+          <input
+            formControlName="city"
+            type="text"
+            placeholder="e.g. Cairo, Alexandria, Giza"
+            class="text-secondary-600 flex-1 border-0 bg-transparent text-sm placeholder-gray-300 outline-none focus:ring-0"
+          />
+        </div>
+        @for (
+          error of [
+            { error: 'required', message: '*City is required' },
+            { error: 'minlength', message: '*Minimum 2 characters required' },
+            { error: 'maxlength', message: '*Maximum 50 characters allowed' },
+            { error: 'pattern', message: '*Only letters, spaces and hyphens allowed' },
+          ];
+          track error.error
+        ) {
+          @if (cityControl?.touched && cityControl?.errors?.[error.error]) {
+            <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+              {{ error.message }}
+            </p>
+          }
+        }
+      </div>
+
+      <!-- Street Address -->
+      <div class="flex flex-col gap-1.5">
+        @let detailsControl = addressForm().get('details');
+
+        <label class="text-secondary-700 text-sm font-semibold"
+          >Street Address <span class="text-red-400">*</span></label
+        >
+        <div
+          [class]="
+            detailsControl?.touched && detailsControl?.valid
+              ? 'border-green-500! focus:border-green-500!'
+              : detailsControl?.touched && detailsControl?.invalid
+                ? 'border-danger-500! focus:border-danger-500!'
+                : ''
+          "
+          class="focus-within:border-primary-400 flex items-start rounded-xl border border-gray-200 px-4 py-2.5 transition"
+        >
+          <i class="fa-solid fa-location-dot text-secondary-400 mt-0.5 mr-2 text-sm"></i>
+          <textarea
+            formControlName="details"
+            rows="3"
+            placeholder="Street name, building number, floor, apartment..."
+            class="text-secondary-600 flex-1 resize-none border-0 bg-transparent text-sm placeholder-gray-300 outline-none focus:ring-0"
+          ></textarea>
+        </div>
+
+        @for (
+          error of [
+            { error: 'required', message: '*City is required' },
+            { error: 'minlength', message: '*Minimum 2 characters required' },
+            { error: 'maxlength', message: '*Maximum 50 characters allowed' },
+            { error: 'pattern', message: '*Only letters, spaces and hyphens allowed' },
+          ];
+          track error.error
+        ) {
+          @if (detailsControl?.touched && detailsControl?.errors?.[error.error]) {
+            <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+              {{ error.message }}
+            </p>
+          }
+        }
+      </div>
+
+      <!-- Phone Number -->
+      <div class="flex flex-col gap-1.5">
+        @let phoneControl = addressForm().get('phone');
+
+        <label class="text-secondary-700 text-sm font-semibold"
+          >Phone Number <span class="text-red-400">*</span></label
+        >
+        <div
+          [class]="
+            phoneControl?.touched && phoneControl?.valid
+              ? 'border-green-500! focus:border-green-500!'
+              : phoneControl?.touched && phoneControl?.invalid
+                ? 'border-danger-500! focus:border-danger-500!'
+                : ''
+          "
+          class="focus-within:border-primary-400 flex items-center rounded-xl border border-gray-200 px-4 py-2.5 transition"
+        >
+          <i class="fa-solid fa-phone text-secondary-400 mr-2 text-sm"></i>
+          <input
+            formControlName="phone"
+            type="tel"
+            placeholder="01xxxxxxxxx"
+            class="text-secondary-600 flex-1 border-0 bg-transparent text-sm placeholder-gray-300 outline-none focus:ring-0"
+          />
+          <span class="text-secondary-400 shrink-0 text-xs">Egyptian numbers only</span>
+        </div>
+
+        @for (
+          error of [
+            { error: 'required', message: '*Please enter your phone number' },
+            { error: 'egyptPhone', message: '*Only Egyptian phone numbers are allowed' },
+          ];
+          track error.error
+        ) {
+          @if (phoneControl?.touched && phoneControl?.errors?.[error.error]) {
+            <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+              {{ error.message }}
+            </p>
+          }
+        }
+      </div>
+    </form>
+  </div>
+</div>

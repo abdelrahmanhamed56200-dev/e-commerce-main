@@ -1,0 +1,23 @@
+<a
+  routerLink="/products"
+  [queryParams]="{ brand: brand()._id, slug: brand().slug }"
+  class="group flex cursor-pointer flex-col items-center gap-3 rounded-2xl border border-transparent bg-white p-4 shadow transition duration-300 hover:-translate-y-1 hover:border-purple-400 hover:shadow-2xl"
+>
+  <div class="flex w-full items-center justify-center rounded-xl bg-gray-100 p-4 py-10">
+    <img
+      [src]="brand().image"
+      [alt]="brand().name"
+      class="object-cover transition duration-500 group-hover:scale-107"
+    />
+  </div>
+  <h2
+    class="text-secondary-500 text-sm font-semibold transition duration-300 group-hover:text-purple-500"
+  >
+    {{ brand().name }}
+  </h2>
+  <p
+    class="flex items-center gap-1 text-xs font-medium text-purple-500 opacity-0 transition duration-300 group-hover:opacity-100"
+  >
+    View Products <i class="fa-solid fa-arrow-right text-2xs"></i>
+  </p>
+</a>

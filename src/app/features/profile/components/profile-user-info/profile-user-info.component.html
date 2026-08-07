@@ -1,0 +1,27 @@
+<div>
+  <h4 class="text-secondary-900 mb-3 text-base font-bold">Account Information</h4>
+
+  <!-- User ID Row -->
+  <div class="flex items-center justify-between border-b border-gray-100 py-2">
+    <span class="text-secondary-500 text-sm">User ID</span>
+    <span class="text-secondary-400 text-sm">
+      @if (id()) {
+        {{ id() }}
+      } @else {
+        &mdash;
+      }
+    </span>
+  </div>
+
+  <!-- Role Row -->
+  <div class="flex items-center justify-between py-2">
+    <span class="text-secondary-500 text-sm">Role</span>
+    <span class="text-primary-600 bg-primary-100 rounded-lg px-3 py-1 text-xs font-medium">
+      @if (user()) {
+        {{ user() }}
+      } @else {
+        &mdash;
+      }
+    </span>
+  </div>
+</div>

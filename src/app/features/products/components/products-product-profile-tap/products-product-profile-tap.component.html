@@ -1,0 +1,52 @@
+<!-- About this Product Section -->
+<section class="flex flex-col gap-4 p-4">
+  <h2 class="text-secondary-800 text-xl font-extrabold">About this Product</h2>
+  <p class="text-secondary-400">Material Polyester Blend Color Name Multicolor Department Women</p>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <!-- Product Information -->
+    <div class="flex flex-col gap-3 rounded-2xl bg-gray-100 p-5">
+      <h3 class="text-secondary-700 mb-1 font-medium">Product Information</h3>
+
+      <div class="flex flex-wrap items-center justify-between gap-1">
+        <span class="text-secondary-400 text-sm">Category</span>
+        <span class="text-secondary-700 text-sm font-semibold"> {{ category() }} </span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-1">
+        <span class="text-secondary-400 text-sm">Subcategory</span>
+        <span class="text-secondary-700 text-sm font-semibold"> {{ subcategory() }} </span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-1">
+        <span class="text-secondary-400 text-sm">Brand</span>
+        <span class="text-secondary-700 text-sm font-semibold"> {{ brand() }} </span>
+      </div>
+
+      @if (sold() > 0) {
+        <div class="flex flex-wrap items-center justify-between gap-1">
+          <span class="text-secondary-400 text-sm">Items Sold</span>
+          <span class="text-secondary-700 text-sm font-semibold">{{ sold() }}+ sold</span>
+        </div>
+      }
+    </div>
+
+    <!-- Key Features -->
+    <div class="flex flex-col gap-3 rounded-2xl bg-gray-100 p-5">
+      <h3 class="text-secondary-700 mb-1 font-medium">Key Features</h3>
+
+      <p class="text-secondary-600 flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-check text-primary-500 text-xs"></i> Premium Quality Product
+      </p>
+      <p class="text-secondary-600 flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-check text-primary-500 text-xs"></i> 100% Authentic Guarantee
+      </p>
+      <p class="text-secondary-600 flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-check text-primary-500 text-xs"></i> Fast & Secure Packaging
+      </p>
+      <p class="text-secondary-600 flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-check text-primary-500 text-xs"></i> Quality Tested
+      </p>
+    </div>
+  </div>
+</section>

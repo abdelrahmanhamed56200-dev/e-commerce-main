@@ -1,0 +1,84 @@
+<div class="flex flex-col gap-5 p-4 sm:flex-row sm:items-center">
+  <!-- Image -->
+  <div
+    class="n relative h-20 w-20 shrink-0 self-center rounded-xl border border-gray-100 sm:self-auto"
+  >
+    <img
+      [src]="order().cartItems[0].product.imageCover"
+      [alt]="order().cartItems[0].product.title"
+      class="h-full w-full rounded-xl object-cover"
+    />
+
+    @if (order().cartItems.length > 1) {
+      <span
+        class="absolute right-0 bottom-11/12 flex h-6 w-6 translate-1/2 items-center justify-center rounded-full bg-black text-xs font-bold text-white"
+      >
+        @if (order().cartItems.length > 9) {
+          +9
+        } @else {
+          +{{ order().cartItems.length }}
+        }
+      </span>
+    }
+  </div>
+
+  <div class="min-w-0 flex-1">
+    <!-- Status -->
+    <span
+      [class]="
+        order().paymentMethodType === 'cash'
+          ? 'bg-orange-100 text-orange-500'
+          : 'bg-blue-100 text-blue-500'
+      "
+      class="mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
+    >
+      @if (order().paymentMethodType === 'cash') {
+        <i class="fa-solid fa-clock"></i>
+        Processing
+      } @else {
+        <i class="fa-solid fa-truck"></i>
+        On the way
+      }
+    </span>
+
+    <!-- id -->
+    <p class="text-secondary-300 mb-2 font-bold">
+      # <span class="text-secondary-500"> {{ order().id }} </span>
+    </p>
+
+    <div
+      class="text-secondary-400 mb-2 flex flex-col flex-wrap gap-2 text-sm font-medium sm:flex-row sm:items-center"
+    >
+      <!-- Date -->
+      <span class="flex items-center gap-1">
+        <i class="fa-regular fa-calendar"></i>{{ order().createdAt | date: 'mediumDate' }}
+      </span>
+      <span class="text-secondary-200 hidden sm:block">•</span>
+
+      <!-- number Items -->
+      <span class="flex items-center gap-1"
+        ><i class="fa-regular fa-copy"></i> {{ order().cartItems.length }} item</span
+      >
+      <span class="text-secondary-200 hidden sm:block">•</span>
+
+      <!-- City -->
+      <span class="flex items-center gap-1"
+        ><i class="fa-solid fa-location-dot"></i> {{ order().shippingAddress?.city }}</span
+      >
+    </div>
+  </div>
+
+  @if (order().paymentMethodType === 'cash') {
+    <div
+      class="text-secondary-400 flex h-9 w-9 shrink-0 items-center justify-center self-start rounded-lg bg-gray-100 text-sm sm:self-auto"
+    >
+      <i class="fa-solid fa-money-bill"></i>
+    </div>
+  } @else {
+    <div
+      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-100 text-sm text-purple-400"
+    >
+      <i class="fa-solid fa-credit-card"></i>
+    </div>
+  }
+</div>

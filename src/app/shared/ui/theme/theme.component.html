@@ -1,0 +1,47 @@
+<!-- Floating Button -->
+<button
+  #floatingBtn
+  (click)="toggleDrawer()"
+  class="bg-primary-500 fixed top-1/2 right-0 z-52 -translate-y-1/2 rounded-l-xl px-2 py-4 text-white shadow-lg transition-all duration-300 hover:brightness-90 focus:border-0"
+>
+  <i class="fa-solid fa-palette text-lg"></i>
+</button>
+
+<!-- Overlay -->
+<div
+  #overlay
+  (click)="toggleDrawer()"
+  class="fixed inset-0 z-51 hidden bg-black/30 opacity-0 transition-opacity duration-300"
+></div>
+
+<!-- Side Drawer -->
+<div
+  #themeDrawer
+  class="fixed top-0 -right-80 z-52 flex h-full w-72 flex-col bg-white shadow-2xl transition-all duration-300"
+>
+  <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+    <h3 class="text-lg font-bold text-slate-800">Theme Customize</h3>
+    <button (click)="toggleDrawer()" class="text-gray-400 transition hover:text-gray-600">
+      <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
+  </div>
+
+  <div class="flex-1 overflow-y-auto px-5 py-6">
+    <p class="mb-5 text-sm text-gray-500">Pick a color to change the site theme</p>
+    <div class="grid grid-cols-3 gap-4">
+      @for (item of themesNames; track $index) {
+        <button
+          (click)="setTheme(item)"
+          [style.border-color]="isSelected() === item ? themeHex[item] : 'transparent'"
+          [class]="isSelected() === item ? 'border-2' : ''"
+          class="flex h-10 w-10 items-center justify-center rounded-full p-0.5 transition"
+        >
+          <span
+            [style.background-color]="themeHex[item]"
+            class="block h-full w-full rounded-full shadow transition duration-300 hover:scale-105"
+          ></span>
+        </button>
+      }
+    </div>
+  </div>
+</div>

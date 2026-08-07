@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ProfileInfoFormComponent } from './profile-info-form.component';
+
+describe('ProfileInfoFormComponent', () => {
+  let component: ProfileInfoFormComponent;
+  let fixture: ComponentFixture<ProfileInfoFormComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ProfileInfoFormComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ProfileInfoFormComponent);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

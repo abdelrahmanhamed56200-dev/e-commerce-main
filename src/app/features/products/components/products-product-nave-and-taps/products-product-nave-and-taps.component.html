@@ -1,0 +1,94 @@
+<section class="overflow-hidden rounded-2xl border border-gray-100 shadow">
+  <!-- buttons -->
+  <div class="border-default border-b">
+    <ul class="text-secondary-400 flex gap-2 text-center text-xs font-semibold md:text-[16px]">
+      <li class="grow md:grow-0">
+        <button
+          (click)="onSelectTap(1)"
+          [class]="
+            activeBtnNum() === 1
+              ? 'border-primary-500 text-primary-500 bg-primary-100/50 border-b-2'
+              : ''
+          "
+          class="flex w-full items-center justify-center gap-2 px-4 py-3 text-center transition duration-300 lg:px-8"
+        >
+          <span class="hidden sm:block">
+            <i class="fa-solid fa-box"></i>
+          </span>
+          Profile
+        </button>
+      </li>
+
+      <li class="grow md:grow-0">
+        <button
+          (click)="onSelectTap(2)"
+          [class]="
+            activeBtnNum() === 2
+              ? 'border-primary-500 text-primary-500 bg-primary-100/50 border-b-2'
+              : ''
+          "
+          class="flex w-full items-center justify-center gap-2 px-4 py-3 text-center transition duration-300 lg:px-8"
+        >
+          <span class="hidden sm:block">
+            <i class="fa-solid fa-star"></i>
+          </span>
+          Reviews ({{ ratingsQuantity() }})
+        </button>
+      </li>
+
+      <li class="grow md:grow-0">
+        <button
+          (click)="onSelectTap(3)"
+          [class]="
+            activeBtnNum() === 3
+              ? 'border-primary-500 text-primary-500 bg-primary-100/50 border-b-2'
+              : ''
+          "
+          class="flex w-full items-center justify-center gap-2 px-4 py-3 text-center transition duration-300 lg:px-8"
+        >
+          <span class="hidden sm:block">
+            <i class="fa-solid fa-truck"></i>
+          </span>
+          Shipping & Returns
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- taps -->
+
+  <div class="px-3 py-6 md:px-8">
+    <!-- About this Product Section -->
+    @defer (when activeTapNum() === 1) {
+      <div [class]="activeTapNum() === 1 ? '' : 'hidden'">
+        <app-products-product-profile-tap
+          [category]="category()"
+          [subcategory]="subcategory()"
+          [brand]="brand()"
+          [sold]="sold()"
+        />
+      </div>
+    }
+
+    <!-- Reviews -->
+    @defer (when activeTapNum() === 2) {
+      @if (activeTapNum() === 2) {
+        <div [class]="activeTapNum() === 2 ? '' : 'hidden'">
+          <app-products-product-reviews-tap
+            [allReviews]="allReviews()"
+            [ratingsAverage]="ratingsAverage()"
+            [ratingsQuantity]="ratingsQuantity()"
+            [productId]="productId()"
+          />
+        </div>
+      }
+    }
+
+    <!-- Shipping & Returns -->
+    @defer (when activeTapNum() === 3) {
+      <div [class]="activeTapNum() === 3 ? '' : 'hidden'">
+        <app-products-product-shipping-and-returns-tap />
+      </div>
+    }
+  </div>
+</section>

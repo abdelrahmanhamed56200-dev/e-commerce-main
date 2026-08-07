@@ -1,0 +1,19 @@
+<!--  Slider  -->
+<app-home-slider />
+
+<!-- FeaturesBar -->
+<app-home-features-bar />
+
+<!-- Shop By Category  -->
+@if (categories().length > 0) {
+  <app-home-category-section [categories]="categories()" />
+}
+
+<!-- promo banner carts -->
+<app-home-promo-banner-cards-section />
+
+<!-- FeaturedProducts -->
+<app-home-featured-products [products]="products()" />
+
+<!-- Newsletter -->
+<app-home-newsletter-section />

@@ -1,0 +1,44 @@
+<section [class]="containerClass()" class="px-4 py-12 md:py-16">
+  <div class="container flex justify-between px-6">
+    <div>
+      <!-- Breadcrumbs -->
+      <app-breadcrumbs
+        [pageTitle]="pageTitle()"
+        [breadcrumbs]="breadcrumbs()"
+        [linkClass]="linkClass()"
+        [separatorClass]="separatorClass()"
+        [activeClass]="activeLinkClass()"
+      />
+
+      <!-- Content -->
+      <div class="mt-4 flex items-center gap-4">
+        <div
+          [class]="iconClass()"
+          class="flex h-14 w-14 items-center justify-center rounded-lg p-2 shadow-2xl"
+        >
+          @if (iconConfig().type === 'img') {
+            <img
+              [src]="iconConfig().value"
+              [alt]="title()"
+              class="h-full w-full rounded-xl object-cover"
+            />
+          } @else {
+            <i [class]="iconConfig().value" class="text-2xl text-white"></i>
+          }
+        </div>
+
+        <!-- Content -->
+        <div>
+          <h1 [class]="titleClass()" class="text-2xl font-bold md:text-3xl">
+            {{ title() }}
+          </h1>
+          <p [class]="descriptionClass()" class="md:text-xl">
+            {{ description() }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <ng-content></ng-content>
+  </div>
+</section>

@@ -1,0 +1,128 @@
+<div
+  class="relative flex flex-col gap-4 rounded-2xl border border-gray-100 p-4 shadow-sm transition-shadow hover:shadow-xl sm:flex-row sm:items-center"
+>
+  <!-- Image + (In / Out) Stock -->
+  <div class="relative flex shrink-0 flex-col items-center gap-2">
+    <a
+      [routerLink]="['/products', product().product._id, product().product.slug]"
+      class="flex h-24 w-full items-center justify-center gap-5 overflow-hidden rounded-xl bg-gray-100 sm:w-24"
+    >
+      <img
+        [src]="product().product.imageCover"
+        [alt]="product().product.title"
+        class="h-24 w-full rounded-xl object-contain shadow-2xs duration-300 hover:scale-110 sm:w-24"
+      />
+    </a>
+
+    @if (product().product.quantity > 0) {
+      <span
+        class="bg-primary-500 text-2xs flex items-center gap-1 self-start rounded-full px-3 py-1 font-semibold text-white shadow-2xs"
+      >
+        <i class="fa-solid fa-check"></i> In Stock
+      </span>
+    } @else {
+      <span
+        class="text-2xs flex items-center gap-1 self-start rounded-full bg-red-500 px-3 py-1 font-semibold text-white shadow-2xs"
+      >
+        <i class="fa-solid fa-xmark"></i> Out of Stock
+      </span>
+    }
+  </div>
+
+  <!-- Info -->
+  <div class="flex flex-1 flex-col gap-2">
+    <!-- Title -->
+    <a
+      [routerLink]="['/products', product().product._id, product().product.slug]"
+      class="text-secondary-800 font-bold"
+      >{{ product().product.title }}</a
+    >
+
+    <!-- Badges -->
+    <span
+      class="bg-primary-100/50 text-primary-600 w-fit rounded-full px-3 py-1 text-xs font-medium"
+    >
+      {{ product().product.category.name }}
+    </span>
+
+    <!-- Price per unit -->
+    <p class="text-primary-500 font-bold">
+      {{ product().price }} EGP <span class="text-secondary-400 text-xs font-normal">per unit</span>
+    </p>
+
+    <!-- Quantity + Total + Delete -->
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <!-- Quantity -->
+      <div class="flex items-center overflow-hidden rounded-xl border border-gray-200">
+        <button
+          (click)="onAddValue(-1)"
+          class="text-secondary-500 flex h-9 w-9 items-center justify-center border-r border-gray-200 transition hover:bg-gray-100"
+        >
+          <i class="fa-solid fa-minus text-xs"></i>
+        </button>
+
+        <input
+          min="1"
+          [max]="product().product.quantity"
+          [formControl]="quantityInput"
+          type="number"
+          class="text-secondary-800 border-0 text-center text-sm font-semibold"
+        />
+        <button
+          (click)="onAddValue(1)"
+          class="bg-primary-500 hover:bg-primary-600 flex h-9 w-9 items-center justify-center text-white transition"
+        >
+          <i class="fa-solid fa-plus text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Total + Delete -->
+      <div class="flex items-center gap-3">
+        <div class="text-right">
+          <p class="text-secondary-400 text-xs">Total</p>
+          <p class="text-secondary-800 text-lg leading-none font-extrabold">
+            {{ total() }} <span class="text-sm font-semibold">EGP</span>
+          </p>
+        </div>
+
+        <button
+          [swal]="{
+            html: `
+              <div class='text-center'>
+                <div class='w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-red-100 mb-3'>
+                  <i class='fa-solid fa-trash text-red-500 text-xl'></i>
+                </div>
+                
+                <h2 class='text-lg font-semibold text-gray-900 mb-2'>
+                  Remove Item?
+                </h2>
+              
+                <p class='text-gray-600'>
+                  Remove <strong class='text-gray-900'>${product().product.title}</strong> from your cart?
+                </p>
+              </div>`,
+            showCancelButton: true,
+            confirmButtonText: 'Remove',
+            cancelButtonText: 'Cancel',
+            buttonsStyling: false,
+            reverseButtons: true,
+            customClass: {
+              popup: 'rounded-2xl',
+              confirmButton: 'bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl ms-4',
+              cancelButton: 'bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-xl',
+            },
+          }"
+          (confirm)="onRemove()"
+          class="flex h-9 w-9 items-center justify-center rounded-xl border border-red-100 bg-red-50 text-red-500 transition duration-300 hover:bg-red-100"
+        >
+          <i class="fa-solid fa-trash text-sm"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  @if (isLoading()) {
+    <div class="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/35">
+      <i class="fa-solid fa-spinner fa-spin text-primary-500 text-3xl"></i>
+    </div>
+  }
+</div>

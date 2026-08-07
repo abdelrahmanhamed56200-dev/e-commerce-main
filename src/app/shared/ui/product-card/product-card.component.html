@@ -1,0 +1,110 @@
+<div
+  class="group relative flex h-full flex-col rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-md"
+>
+  <div class="absolute top-4 right-4 z-10 flex flex-col gap-2">
+    <button
+      (click)="onAddProductToWishlist()"
+      class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-gray-100 bg-white text-gray-400 shadow-sm transition-colors hover:text-red-500"
+    >
+      @if (isAddingToWishlist()) {
+        <i class="fa-solid fa-spinner fa-spin text-red-500"></i>
+      } @else if (isAddedToWishlist()) {
+        <i class="fa-solid fa-heart text-red-500"></i>
+      } @else {
+        <i class="fa-regular fa-heart"></i>
+      }
+    </button>
+    <button
+      class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-gray-100 bg-white text-gray-400 shadow-sm transition-colors hover:text-blue-500"
+    >
+      <i class="fa-solid fa-arrows-rotate text-sm"></i>
+    </button>
+    <a
+      [routerLink]="['/products/', product()._id, product().slug]"
+      class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-gray-100 bg-white text-gray-400 shadow-sm transition-colors hover:text-gray-800"
+    >
+      <i class="fa-regular fa-eye text-sm"></i>
+    </a>
+  </div>
+
+  @if (product().priceAfterDiscount) {
+    <div
+      class="absolute top-4 left-4 z-10 flex flex-col gap-2 rounded bg-red-500 px-1.5 py-0.5 text-[14px] text-white"
+    >
+      -{{ product().price | discount: product().priceAfterDiscount! }}%
+    </div>
+  }
+
+  <div
+    class="mb-6 flex aspect-square h-60 w-full items-center justify-center overflow-hidden bg-gray-50"
+  >
+    <img
+      [src]="product().imageCover"
+      [alt]="product().title"
+      class="max-w-50 object-cover object-top transition-transform duration-300 group-hover:scale-105"
+    />
+  </div>
+
+  <div class="mb-6 space-y-1">
+    <p class="text-xs font-medium tracking-wide text-gray-400">
+      {{ product().category.name }}
+    </p>
+    <a
+      [routerLink]="['/products/', product()._id, product().slug]"
+      class="line-clamp-2 text-lg font-bold text-gray-800"
+      >{{ product().title }}</a
+    >
+
+    <div class="mt-1 flex items-center gap-1">
+      <div class="text-2xs flex text-yellow-400">
+        @for (item of [1, 2, 3, 4, 5]; track $index) {
+          @if ($index + 1 <= product().ratingsAverage) {
+            <i class="fa-solid fa-star"></i>
+          } @else if ($index < product().ratingsAverage && $index + 1 > product().ratingsAverage) {
+            <i class="fa-solid fa-star-half-stroke"></i>
+          } @else {
+            <i class="fa-regular fa-star text-gray-300"></i>
+          }
+        }
+      </div>
+      <span class="ml-1 text-xs font-medium text-gray-400">
+        {{ product().ratingsAverage }} ({{ product().ratingsQuantity }})
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-auto flex items-center justify-between">
+    @if (product().priceAfterDiscount) {
+      <div class="flex items-baseline gap-1">
+        <span class="text-primary-600 text-xl leading-none font-extrabold">
+          {{ product().priceAfterDiscount }}
+        </span>
+        <span class="text-md font-bold text-gray-900">EGP</span>
+        <span class="ms-2 text-xl leading-none text-gray-500 line-through">
+          {{ product().price }}
+        </span>
+      </div>
+    } @else {
+      <div class="flex items-baseline gap-1">
+        <span class="text-xl leading-none font-extrabold text-gray-900">
+          {{ product().price }}
+        </span>
+        <span class="text-md font-bold text-gray-900">EGP</span>
+      </div>
+    }
+
+    <button
+      (click)="onAddProductToCart()"
+      [class]="isAddingToCartDone() || isAddingToCartDone() ? 'bg-primary-600' : 'cursor-pointer'"
+      class="bg-primary-500 hover:bg-primary-600 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-lg shadow-green-100 transition-all active:scale-95"
+    >
+      @if (idAddingToCart()) {
+        <i class="fa-solid fa-spinner fa-spin"></i>
+      } @else if (isAddingToCartDone()) {
+        <i class="fa-solid fa-check"></i>
+      } @else {
+        <i class="fa-solid fa-plus text-lg"></i>
+      }
+    </button>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<section
+  class="container grid min-h-screen w-full gap-10 px-6 py-10 md:px-10 lg:grid-cols-[6fr_6fr] xl:grid-cols-[7fr_5fr]"
+>
+  <!-- Left: login hero -->
+  <div class="hidden lg:block">
+    <app-auth-login-hero />
+  </div>
+
+  <!-- Right: Form -->
+  <section class="flex flex-col gap-4 rounded-2xl border border-gray-100 p-5 shadow-md">
+    <!-- Title -->
+    <h2 class="text-center text-3xl font-extrabold">
+      <span class="text-green-500">Fresh</span><span class="text-secondary-800">Cart</span>
+    </h2>
+
+    <!-- form title -->
+    <app-auth-form-title
+      title="Welcome Back!"
+      text="Sign in to continue your fresh shopping experience"
+    />
+
+    <!-- Social Buttons -->
+    <app-auth-social-buttons (onSocialSelect)="onSocialSelect($event)" />
+
+    <!-- Divider -->
+    <app-auth-divider text="or continue with email" />
+
+    <!-- form -->
+    <app-auth-login-form [redirectTo]="redirectTo()" />
+
+    <!-- Register Link -->
+    <app-auth-form-footer-link
+      [path]="['/signup']"
+      [queryParams]="{ redirectTo: redirectTo() }"
+      pathName="Create an account"
+      text="New to FreshCart?"
+    />
+
+    <!-- Trust Badges -->
+    <app-auth-trust-badges />
+  </section>
+</section>

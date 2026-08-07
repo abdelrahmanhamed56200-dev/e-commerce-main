@@ -1,0 +1,20 @@
+<section class="px-6 py-8">
+  <div class="container">
+    <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-0">
+      <app-home-section-title [title]="'Shop By'" [title2]="'Category'" />
+
+      <a
+        routerLink="/categories"
+        class="text-primary-500 hover:text-primary-600 flex items-center gap-1 self-end text-sm font-medium md:self-auto"
+      >
+        View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
+      @for (category of categories(); track category._id) {
+        <app-home-category-card [category]="category" />
+      }
+    </div>
+  </div>
+</section>

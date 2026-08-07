@@ -1,0 +1,8 @@
+<div class="flex flex-col gap-3">
+  @for (prod of products(); track $index) {
+    <app-cart-card [product]="prod" />
+  } @empty {
+    <app-cart-card-skelton />
+    <app-cart-card-skelton />
+  }
+</div>

@@ -1,0 +1,26 @@
+@if (isEmpty()) {
+  <section [class]="cardClass()" class="flex flex-col items-center justify-center gap-4 py-20">
+    <!-- Icon -->
+    <div class="flex h-20 w-20 items-center justify-center rounded-full bg-gray-200">
+      <i [class]="iconClass()" class="fa-solid fa-magnifying-glass text-3xl text-gray-400"></i>
+    </div>
+
+    <!-- Title -->
+    <h3 class="text-lg font-bold text-slate-800">{{ title() }}</h3>
+
+    <!-- Subtitle -->
+    <p class="text-secondary-400 max-w-xs text-center font-semibold md:max-w-max">
+      {{ text() }}
+    </p>
+
+    <!-- Button -->
+    @if (!disableButton()) {
+      <button
+        (click)="clearFilters()"
+        class="bg-primary-500 hover:bg-primary-600 cursor-pointer rounded-xl px-8 py-3 font-semibold text-white transition duration-300"
+      >
+        {{ buttonText() }}
+      </button>
+    }
+  </section>
+}

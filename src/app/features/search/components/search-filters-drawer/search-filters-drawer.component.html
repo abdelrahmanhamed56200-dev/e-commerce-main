@@ -1,0 +1,156 @@
+<aside
+  [class]="isOpen() ? 'translate-x-0' : 'translate-x-full'"
+  class="fixed top-0 right-0 z-54 flex h-full w-80 flex-col bg-white shadow-2xl transition duration-300 ease-in-out lg:hidden"
+>
+  <!-- Header -->
+  <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+    <h3 class="text-lg font-bold text-slate-800">Filters</h3>
+    <button
+      (click)="closeFiltersDrawer()"
+      class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:text-gray-700"
+    >
+      <i class="fa-solid fa-xmark text-sm"></i>
+    </button>
+  </div>
+
+  <!-- Body  -->
+  <div class="flex flex-1 flex-col gap-6 overflow-y-auto px-5 py-5">
+    <!-- Categories  -->
+    <div class="border-b border-gray-100 pb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-800">Categories</h3>
+        @if (activeCategoriesIds().length > 0) {
+          <span class="text-primary-500 text-[14px] font-medium">
+            {{ activeCategoriesIds().length }} selected
+          </span>
+        }
+      </div>
+
+      @if (categoriesForm) {
+        <form
+          [formGroup]="categoriesForm"
+          class="flex max-h-52 flex-col gap-2 overflow-y-auto px-1"
+        >
+          @for (category of categories(); track category.id) {
+            <label
+              class="hover:text-primary-500 flex cursor-pointer items-center gap-2 text-sm text-gray-600 transition duration-300"
+            >
+              <input
+                [formControlName]="category.id"
+                type="checkbox"
+                class="accent-primary-500 h-4 w-4 rounded-sm"
+              />
+              {{ category.value }}
+            </label>
+          }
+        </form>
+      }
+    </div>
+
+    <!-- Price Range  -->
+    <div class="border-b border-gray-100 pb-5">
+      <h3 class="mb-3 text-base font-bold text-slate-800">Price Range</h3>
+
+      <!-- Min / Max Inputs  -->
+      <form [formGroup]="priceRangeForm" class="mb-3 flex gap-3">
+        <div class="flex flex-1 flex-col gap-1">
+          <label class="text-xs text-gray-400">Min (EGP)</label>
+          <input
+            formControlName="minPrice"
+            min="0"
+            step="1"
+            type="number"
+            placeholder="0"
+            class="focus:border-primary-400 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-600 transition outline-none"
+          />
+        </div>
+        <div class="flex flex-1 flex-col gap-1">
+          <label class="text-xs text-gray-400">Max (EGP)</label>
+          <input
+            formControlName="maxPrice"
+            type="number"
+            min="1"
+            step="1"
+            placeholder="No limit"
+            class="focus:border-primary-400 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-600 transition outline-none"
+          />
+        </div>
+      </form>
+
+      <!-- Quick Price Chips  -->
+      <div class="grid grid-cols-2 gap-3 px-2">
+        <button
+          (click)="setPriceRene('500')"
+          class="hover:bg-primary-100 hover:border-primary-400 hover:text-primary-700 cursor-pointer rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[14px] text-gray-600 transition"
+        >
+          Under 500
+        </button>
+        <button
+          (click)="setPriceRene('1000')"
+          class="hover:bg-primary-100 hover:border-primary-400 hover:text-primary-700 cursor-pointer rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[14px] text-gray-600 transition"
+        >
+          Under 1K
+        </button>
+        <button
+          (click)="setPriceRene('5000')"
+          class="hover:bg-primary-100 hover:border-primary-400 hover:text-primary-700 cursor-pointer rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[14px] text-gray-600 transition"
+        >
+          Under 5K
+        </button>
+        <button
+          (click)="setPriceRene('10000')"
+          class="hover:bg-primary-100 hover:border-primary-400 hover:text-primary-700 cursor-pointer rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[14px] text-gray-600 transition"
+        >
+          Under 10K
+        </button>
+      </div>
+    </div>
+
+    <!-- Brands  -->
+    <div class="border-b border-gray-100 pb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-800">Brands</h3>
+        @if (activeBrandsIds().length > 0) {
+          <span class="text-primary-500 text-[14px] font-medium">
+            {{ activeBrandsIds().length }} selected
+          </span>
+        }
+      </div>
+      @if (brandsForm) {
+        <form [formGroup]="brandsForm" class="flex max-h-52 flex-col gap-2 overflow-y-auto px-1">
+          @for (brand of brands(); track brand.id) {
+            <label
+              class="hover:text-primary-500 flex cursor-pointer items-center gap-2 text-sm text-gray-600 transition duration-300"
+            >
+              <input
+                [formControlName]="brand.id"
+                type="checkbox"
+                class="accent-primary-500 h-4 w-4 rounded-sm"
+              />
+              {{ brand.value }}
+            </label>
+          }
+        </form>
+      }
+    </div>
+  </div>
+
+  <!-- Footer  -->
+  @if (isActiveFilters()) {
+    <div class="border-t border-gray-100 px-5 py-4">
+      <button
+        (click)="clearAllFilters()"
+        class="w-full rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-600 transition duration-300 hover:border-green-400 hover:text-green-500"
+      >
+        Clear All Filters
+      </button>
+    </div>
+  }
+</aside>
+
+<!-- Overlay -->
+<div
+  [class]="isOpen() ? 'block' : 'hidden'"
+  (click)="closeFiltersDrawer()"
+  class="fixed inset-0 z-53 overflow-hidden bg-black/40 lg:hidden"
+></div>

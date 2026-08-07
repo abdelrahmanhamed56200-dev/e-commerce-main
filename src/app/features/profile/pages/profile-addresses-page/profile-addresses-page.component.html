@@ -1,0 +1,24 @@
+<!-- Header -->
+<app-profile-addresses-header (onAddAddress)="addAddress()" />
+
+<!-- no Addresses  -->
+<app-not-found-produces
+  cardClass="shadow-xl  rounded-3xl mt-6 border border-gray-100"
+  iconClass="fa-solid fa-location-dot"
+  title="No Addresses Found"
+  text="Add your first delivery address to make checkout faster and easier."
+  buttonText="Add Your First Address"
+  (onClearFilters)="addAddress()"
+  [isEmpty]="allAddresses().length === 0 && !isLoading()"
+/>
+
+<!-- loading -->
+@if (isLoading()) {
+  <app-address-card-skeleton />
+  <app-address-card-skeleton />
+  <app-address-card-skeleton />
+  <app-address-card-skeleton />
+} @else {
+  <!-- Addresses -->
+  <app-profile-addresses-all-addresses-list [allAddresses]="allAddresses()" />
+}

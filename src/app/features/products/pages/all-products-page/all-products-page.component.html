@@ -1,0 +1,61 @@
+<!-- bread crumbs -->
+<app-breadcrumbs-card
+  [breadcrumbs]="crumbPaths()"
+  [iconConfig]="crumb_icon_img()"
+  [title]="crumbTitle()"
+  [description]="crumbText()"
+  [pageTitle]="crumbPageTitle()"
+/>
+
+<!-- filters -->
+<div class="container px-4 pt-5">
+  <app-active-filters
+    [filters]="activeFilter()"
+    (onClearFilters)="onClearFilters()"
+    (onRemoveFilter)="onRemoveFilter($event)"
+  />
+</div>
+
+<!-- loading -->
+@defer (when isLoading()) {
+  <app-loading-products [isLoading]="isLoading()" />
+}
+
+<!-- not Found -->
+@defer (when products().length === 0 && !isLoading()) {
+  <app-not-found-produces
+    [isEmpty]="products().length === 0 && !isLoading()"
+    (onClearFilters)="onClearFilters()"
+  />
+}
+
+<!-- all products -->
+<app-products-all-products
+  [isLoading]="isLoading()"
+  [products]="
+    products()
+      | paginate
+        : {
+            id: 'foo',
+            itemsPerPage: limit(),
+            currentPage: currentPage(),
+            totalItems: totalProducts(),
+          }
+  "
+/>
+
+<!-- pagination -->
+@if (!isLoading() && totalProducts() >= limit()) {
+  <div class="text-center">
+    <pagination-controls
+      id="foo"
+      (pageChange)="onPageChanged($event)"
+      previousLabel="Previous"
+      nextLabel="Next"
+      screenReaderPaginationLabel="Pagination"
+      screenReaderPageLabel="page"
+      screenReaderCurrentLabel="You're on page"
+    >
+    </pagination-controls>
+  </div>
+}

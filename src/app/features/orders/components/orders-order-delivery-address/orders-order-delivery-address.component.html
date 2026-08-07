@@ -1,0 +1,25 @@
+@if (shippingAddress()) {
+  <div class="rounded-xl border border-gray-100 bg-gray-100 p-4">
+    <div class="mb-5 flex items-center gap-2">
+      <span class="flex h-8 w-8 items-center justify-center rounded bg-blue-100">
+        <i class="fa-solid fa-location-dot text-sm text-blue-600"></i>
+      </span>
+      <span class="text-secondary-700 font-semibold">Delivery Address</span>
+    </div>
+
+    <div class="flex gap-2">
+      <div>
+        <p class="text-secondary-800 font-semibold">city:</p>
+        <p class="text-secondary-400 my-4">details:</p>
+        <p class="text-secondary-400 flex items-center gap-1">phone:</p>
+      </div>
+      <div>
+        <p class="text-secondary-800 font-semibold">{{ shippingAddress()?.city }}</p>
+        <p class="text-secondary-400 my-4">{{ shippingAddress()?.details }}</p>
+        <p class="text-secondary-400 flex items-center gap-1">
+          <i class="fa-solid fa-phone"></i> {{ shippingAddress()?.phone }}
+        </p>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,32 @@
+<section
+  class="container grid min-h-screen w-full gap-10 px-6 py-10 md:px-10 lg:grid-cols-[6fr_6fr] xl:grid-cols-[7fr_5fr]"
+>
+  <!-- Left: register hero -->
+  <app-auth-register-hero />
+
+  <!-- Right: Form -->
+  <section class="flex flex-col gap-4 rounded-2xl border border-gray-100 p-5 shadow-md">
+    <!-- form title -->
+    <app-auth-form-title
+      title="Create Your Account"
+      text="Start your fresh journey with us today"
+    />
+
+    <!-- Social Buttons -->
+    <app-auth-social-buttons [disPlayLayout]="'row'" (onSocialSelect)="onSocialSelect($event)" />
+
+    <!-- Divider -->
+    <app-auth-divider text="or" />
+
+    <!-- form -->
+    <app-auth-register-form [redirectTo]="redirectTo()" />
+
+    <!-- Register Link -->
+    <app-auth-form-footer-link
+      [path]="['/login']"
+      [queryParams]="{ redirectTo: redirectTo() }"
+      pathName=" Sign In"
+      text="Already have an account? "
+    />
+  </section>
+</section>

@@ -1,0 +1,78 @@
+@if (isEmpty()) {
+  <div class="py-20">
+    <app-not-found-produces
+      title="No product Found"
+      text="product will appear here once available."
+      iconClass="fa-solid fa-tags"
+      [isEmpty]="isEmpty()"
+      [disableButton]="true"
+    />
+  </div>
+} @else {
+  <div class="flex flex-col gap-6 px-6 py-5">
+    <!-- breadcrumbs -->
+    <div class="container">
+      <app-breadcrumbs
+        [pageTitle]="breadcrumbsPageTitle()"
+        [breadcrumbs]="breadcrumbsPaths()"
+        linkClass="text-secondary-400 hover:text-secondary-600"
+        separatorClass="text-secondary-400"
+        activeClass="text-secondary-600 font-semibold"
+      />
+    </div>
+
+    <!-- product images & info -->
+    <div class="grid grid-cols-12 gap-5 lg:gap-7">
+      <!-- product images -->
+      @if (isLoading()) {
+        <div class="col-span-12 lg:col-span-3">
+          <div class="sticky top-20">
+            <app-products-product-image-swiper-skeleton />
+          </div>
+        </div>
+      } @else {
+        <div
+          [class]="isLoadingImg() ? 'invisible opacity-0' : ''"
+          class="col-span-12 lg:col-span-3"
+        >
+          <div class="sticky top-20">
+            <app-products-product-details-swiper
+              [imgs]="productDetails().images"
+              [productTitle]="productDetails().title"
+            />
+          </div>
+        </div>
+      }
+
+      <!-- product info -->
+      @if (isLoading()) {
+        <div class="col-span-12 lg:col-span-9">
+          <app-products-product-details-info-skeleton />
+        </div>
+      } @else {
+        <div class="col-span-12 lg:col-span-9">
+          <app-products-product-info [productDetails]="productDetails()" />
+        </div>
+      }
+    </div>
+
+    <!-- nave & taps -->
+    @if (!isLoading()) {
+      <app-products-product-nave-and-taps
+        [ratingsAverage]="productDetails().ratingsAverage"
+        [ratingsQuantity]="productDetails().ratingsQuantity"
+        [category]="productDetails().category.name"
+        [subcategory]="productDetails().subcategory[0].name"
+        [brand]="productDetails().brand.name"
+        [sold]="productDetails().sold"
+        [productId]="productDetails()._id"
+        [allReviews]="productDetails().reviews"
+      />
+    }
+
+    <!-- related products -->
+    @if (!isLoading() && !isLoadingRelatedProducts()) {
+      <app-products-product-related-products [products]="relatedProducts()" />
+    }
+  </div>
+}

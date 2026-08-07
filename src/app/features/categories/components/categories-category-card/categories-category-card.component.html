@@ -1,0 +1,18 @@
+<a
+  [routerLink]="['/categories/', category()._id]"
+  class="group hover:border-primary-400 flex cursor-pointer flex-col items-center gap-3 rounded-2xl border border-transparent p-4 shadow-md transition duration-400 hover:-translate-y-1 hover:shadow-lg"
+>
+  <div class="h-48 w-full overflow-hidden rounded-xl">
+    <img
+      [src]="category().image"
+      [alt]="category().name"
+      class="h-48 w-full object-cover transition duration-300 group-hover:scale-110"
+    />
+  </div>
+  <p class="text-primary-500 text-sm font-semibold">{{ category().name }}</p>
+  <p
+    class="text-primary-500 flex items-center gap-1 text-xs font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+  >
+    View Subcategories <i class="fa-solid fa-arrow-right text-2xs"></i>
+  </p>
+</a>

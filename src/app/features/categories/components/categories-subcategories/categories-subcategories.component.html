@@ -1,0 +1,26 @@
+<section class="px-6 py-8">
+  <div class="container">
+    <!-- Back Link -->
+    <app-back-link pageTitle="categories" [url]="'/categories'" />
+
+    <!-- Count Title -->
+    <h2 class="mb-6 text-lg font-bold text-slate-800">
+      {{ subcategories().length }} Subcategories in {{ categoryName() }}
+    </h2>
+
+    <!-- Cards Grid -->
+    <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      @if (isLoading()) {
+        @for (item of [1, 2, 3, 4, 5, 6, 7, 8]; track $index) {
+          <app-categories-skeleton-subcategory-card />
+        }
+      } @else if (subcategories().length === 0) {
+        <p class="col-span-full text-center text-gray-500">No subcategories found.</p>
+      } @else {
+        @for (subcategory of subcategories(); track subcategory._id) {
+          <app-categories-subcategory-card [subcategory]="subcategory" />
+        }
+      }
+    </section>
+  </div>
+</section>

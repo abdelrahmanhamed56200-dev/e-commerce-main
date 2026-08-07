@@ -1,0 +1,14 @@
+@if (!isLoading() && products().length !== 0) {
+  <section class="px-4 pt-4 pb-6">
+    <div class="container">
+      <p class="text-secondary-400 text-[14px]">Showing {{ products().length }} products</p>
+      <div
+        class="xxl:grid-cols-5 grid grid-cols-1 gap-6 py-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      >
+        @for (product of products(); track product._id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+    </div>
+  </section>
+}

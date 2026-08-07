@@ -1,0 +1,68 @@
+<div class="rounded-2xl border border-gray-100 p-5 shadow-sm">
+  <h2 class="mb-4 text-lg font-semibold text-gray-900">Write a Review</h2>
+
+  <!-- Rating -->
+  <div class="mb-4">
+    <p class="mb-2 block text-sm text-gray-600">Your rating</p>
+    <div (mouseleave)="onHoverRating(0)" class="flex items-center gap-1 text-2xl text-gray-300">
+      @for (star of [1, 2, 3, 4, 5]; track $index) {
+        <i
+          (click)="onSelectRating(star)"
+          (mouseenter)="onHoverRating(star)"
+          [class.text-yellow-400]="star <= (hoverRating() || selectedRating())"
+          class="fas fa-star cursor-pointer"
+        ></i>
+      }
+    </div>
+    @if (isSelectedRating()) {
+      <p
+        [class.opacity-100]="isSelectedRating()"
+        class="mt-2 text-sm text-red-500 opacity-0 transition-all delay-75 duration-500"
+      >
+        Please select a rating before submitting your review
+      </p>
+    }
+  </div>
+
+  <!-- text -->
+  <div class="mb-4">
+    <label class="mb-2 block text-sm text-gray-600">Your review</label>
+
+    <textarea
+      rows="4"
+      [formControl]="textInput"
+      placeholder="Share your experience..."
+      class="w-full resize-none rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+    ></textarea>
+    @if (textInput.touched && textInput.invalid) {
+      <p
+        [class.opacity-100]="textInput.invalid"
+        class="mt-2 text-sm text-red-500 opacity-0 transition-all delay-75 duration-500"
+      >
+        Please write a review before submitting.
+      </p>
+    }
+  </div>
+
+  <!-- Submit -->
+  <div class="grid grid-cols-12 gap-3">
+    <button
+      (click)="submit()"
+      [class.bg-primary-700]="isLoading()"
+      class="bg-primary-500 hover:bg-primary-700 col-span-12 cursor-pointer rounded-xl py-2.5 font-medium text-white transition md:col-span-8"
+    >
+      @if (isLoading()) {
+        Submit Review <i class="fa-solid fa-spinner fa-spin"></i>
+      } @else {
+        Submit Review
+      }
+    </button>
+    <button
+      (click)="cancel()"
+      [class.bg-gray-200]="isLoading()"
+      class="text-secondary-500 col-span-12 cursor-pointer rounded-xl bg-gray-100 py-2.5 font-medium transition hover:bg-gray-200 md:col-span-4"
+    >
+      cancel
+    </button>
+  </div>
+</div>

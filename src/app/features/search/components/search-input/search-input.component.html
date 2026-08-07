@@ -1,0 +1,35 @@
+<section class="bg-gray-50 px-6 py-6.5 shadow">
+  <div class="container">
+    <!-- breadcrumbs -->
+    <app-breadcrumbs
+      pageTitle="Search Results"
+      linkClass="text-secondary-400 hover:text-secondary-600"
+      separatorClass="text-secondary-400"
+      activeClass="text-secondary-600 font-semibold"
+    />
+
+    <!-- Search Input -->
+    <div
+      class="focus-within:border-primary-500 focus-within:shadow-primary-400 mt-3 flex w-full max-w-2xl items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 shadow shadow-transparent transition"
+    >
+      <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+      <input
+        [formControl]="searchInput"
+        type="text"
+        placeholder="Search for products..."
+        class="text-secondary-600 flex-1 border-0 bg-transparent placeholder-gray-400 shadow-none! focus:shadow-none focus:ring-0 focus:outline-none"
+      />
+    </div>
+
+    @if (isSearch()) {
+      <div class="mt-4">
+        <h1 class="text-secondary-500 text-2xl font-bold md:text-3xl">
+          Search Results for "{{ searchInput.value }}"
+        </h1>
+        <p class="text-secondary-300 mt-1 text-sm font-semibold md:text-base">
+          We found {{ numberOfProducts() }} products for you
+        </p>
+      </div>
+    }
+  </div>
+</section>

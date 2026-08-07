@@ -1,0 +1,22 @@
+<!-- bread crumbs -->
+<app-breadcrumbs-card
+  [iconConfig]="
+    isLoading()
+      ? { type: 'icon', value: 'fa-solid fa-spinner fa-spin' }
+      : {
+          type: 'img',
+          value: category().image,
+        }
+  "
+  [title]="isLoading() ? 'Loading...' : category().name"
+  description="Choose a subcategory to browse products"
+  [pageTitle]="isLoading() ? 'Loading...' : category().name"
+  [breadcrumbs]="[{ label: 'Categories', link: '/categories' }]"
+/>
+
+<!-- Subcategories -->
+<app-categories-subcategories
+  [categoryName]="category().name"
+  [subcategories]="subcategories()"
+  [isLoading]="isLoadingSubcategories()"
+/>

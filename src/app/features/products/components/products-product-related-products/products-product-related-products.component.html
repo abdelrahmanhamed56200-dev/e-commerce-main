@@ -1,0 +1,39 @@
+<section>
+  <!-- Title -->
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-3 py-4">
+      <span class="bg-primary-500 block h-7 w-1 rounded-sm"></span>
+      <h2 class="text-2xl font-bold">
+        <span class="text-secondary-800">You May Also </span>
+        <span class="text-primary-500">Like</span>
+      </h2>
+    </div>
+
+    <!-- buttons -->
+    <div class="flex items-center gap-2">
+      <button
+        #prevBtn
+        class="text-secondary-500 hover:border-primary-400 hover:text-primary-500 flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 transition"
+      >
+        <i class="fa-solid fa-chevron-left text-xs"></i>
+      </button>
+      <button
+        #nextBtn
+        class="text-secondary-500 hover:border-primary-400 hover:text-primary-500 flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 transition"
+      >
+        <i class="fa-solid fa-chevron-right text-xs"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- related produces -->
+  <div>
+    <swiper-container #swiper init="false" class="h-100">
+      @for (prod of products(); track prod._id) {
+        <swiper-slide class="flex h-full">
+          <app-product-card class="h-full w-full" [product]="prod" />
+        </swiper-slide>
+      }
+    </swiper-container>
+  </div>
+</section>

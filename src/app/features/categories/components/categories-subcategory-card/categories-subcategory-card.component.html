@@ -1,0 +1,19 @@
+<a
+  [routerLink]="['/products']"
+  [queryParams]="{ subcategory: subcategory()._id, slug: subcategory().slug }"
+  class="group hover:border-primary-500 flex h-full cursor-pointer flex-col gap-3 rounded-2xl border border-transparent p-5 shadow transition duration-300 hover:-translate-y-0.5 hover:shadow-2xl"
+>
+  <div class="bg-primary-100 flex h-12 w-12 items-center justify-center rounded-xl">
+    <i class="fa-solid fa-folder-open text-primary-600 text-xl"></i>
+  </div>
+  <h3
+    class="text-secondary-500 group-hover:text-primary-500 grow text-base font-bold transition duration-300"
+  >
+    {{ subcategory().name }}
+  </h3>
+  <p
+    class="text-primary-500 flex items-center gap-1 text-xs font-medium opacity-0 transition duration-300 group-hover:opacity-100"
+  >
+    Browse Products <i class="fa-solid fa-arrow-right text-2xs"></i>
+  </p>
+</a>

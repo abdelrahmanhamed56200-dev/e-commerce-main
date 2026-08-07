@@ -1,0 +1,49 @@
+swiper-container::part(bullet) {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+  z-index: 1000;
+  opacity: 100%;
+}
+swiper-container::part(bullet):hover {
+  transform: scale(1.1);
+  background-color: white;
+}
+swiper-container::part(bullet-active):hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+swiper-container::part(bullet-active) {
+  width: 40px;
+  height: 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  background-color: white;
+  transition: all 0.3s;
+  opacity: 100%;
+}
+swiper-container::part(button-next),
+swiper-container::part(button-prev) {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+  color: var(--color-primary-600);
+  opacity: 100%;
+  --swiper-navigation-sides-offset: 15px;
+  --swiper-navigation-color: var(--color-primary-600);
+}
+
+swiper-container::part(button-next):hover,
+swiper-container::part(button-prev):hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: scale(110%);
+}
+
+swiper-slide.swiper-slide-active .animate {
+  @apply animate-[fadeUp_1s_ease-in-out_0.3s_forwards] opacity-0;
+}

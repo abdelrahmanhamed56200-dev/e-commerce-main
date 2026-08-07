@@ -1,0 +1,27 @@
+<app-breadcrumbs-card
+  [iconConfig]="{ value: 'fa-solid fa-shield-halved', type: 'icon' }"
+  title="Privacy Policy"
+  description="Last updated: February 2026"
+  pageTitle="Privacy Policy"
+/>
+<!-- notice-card -->
+<div class="container grid gap-5 px-6 py-5 lg:gap-7">
+  <app-static-notice-card
+    [icon]="privacyPolicy().notice.icon"
+    [title]="privacyPolicy().notice.title"
+    [text]="privacyPolicy().notice.text"
+    [mainColor]="'success'"
+  />
+
+  <!-- info-card -->
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-7">
+    @for (article of privacyPolicy().articles; track $index) {
+      <app-static-info-card [articleId]="$index + 1" [article]="article" />
+    }
+  </div>
+
+  <app-static-privacy-and-term-action-buttons
+    [paths]="['/terms']"
+    pathName="View Terms of Service"
+  />
+</div>

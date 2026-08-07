@@ -1,0 +1,60 @@
+<section class="relative flex min-h-screen items-center justify-center">
+  <!-- Decorative floating icons -->
+  <span class="text-primary-300 absolute top-10 left-30 text-2xl opacity-60">
+    <i class="fa-solid fa-apple-whole animate-bounce"></i>
+  </span>
+  <span class="text-primary-300 absolute top-40 right-24 text-sm opacity-40">
+    <i class="fa-solid fa-pepper-hot animate-bounce"></i>
+  </span>
+  <span class="text-primary-300 absolute bottom-40 left-24 text-lg opacity-50">
+    <i class="fa-solid fa-leaf animate-bounce"></i>
+  </span>
+  <span class="text-primary-300 absolute bottom-24 left-40 text-sm opacity-40">
+    <i class="fa-solid fa-seedling animate-bounce"></i>
+  </span>
+  <span class="text-primary-200 absolute top-1/2 right-16 text-xl opacity-40">
+    <i class="fa-solid fa-carrot animate-bounce"></i>
+  </span>
+  <span class="text-primary-300 absolute right-32 bottom-16 text-lg opacity-50">
+    <i class="fa-solid fa-seedling animate-bounce"></i>
+  </span>
+
+  <div class="relative z-1 container flex flex-col items-center justify-center gap-5 px-6 pb-25">
+    <!-- 404 -->
+    <div>
+      <img
+        src="/assets/images/error.svg"
+        class="w-full animate-[pulse_3s_infinite]"
+        alt="error 404 not found page icon "
+      />
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-secondary-800 text-4xl font-extrabold">Oops! Nothing Here</h1>
+
+    <!-- Subtitle -->
+    <p class="text-sm leading-relaxed text-gray-400">
+      Looks like this page went out of stock! Don't worry,<br />
+      there's plenty more fresh content to explore.
+    </p>
+
+    <!-- Buttons -->
+    <div class="flex w-full flex-col items-center justify-center gap-3 md:flex-row">
+      <a
+        routerLink="/"
+        class="bg-primary-500 hover:bg-primary-600 flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-white transition duration-300 md:w-auto"
+      >
+        <i class="fa-solid fa-house text-sm"></i> Go to Homepage
+      </a>
+      <button
+        (click)="onBack()"
+        class="group text-secondary-600 hover:border-primary-400 hover:text-primary-500 flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3 font-semibold transition duration-300 md:w-auto"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-sm transition-transform duration-300 group-hover:-translate-x-2"
+        ></i>
+        Go Back
+      </button>
+    </div>
+  </div>
+</section>

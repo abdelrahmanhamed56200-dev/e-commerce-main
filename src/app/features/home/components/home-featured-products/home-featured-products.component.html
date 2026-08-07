@@ -1,0 +1,12 @@
+<section [class.hidden]="products().length === 0" class="py-6">
+  <div class="container">
+    <app-home-section-title title="Featured" title2="Products" />
+    <div
+      class="xxl:grid-cols-5 grid grid-cols-1 gap-6 py-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+    >
+      @for (product of products(); track product._id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,113 @@
+<form [formGroup]="registerForm" class="flex flex-col gap-5">
+  <!-- Name -->
+  <app-auth-input
+    formControlName="name"
+    inputType="name"
+    label="Name*"
+    inputId="name"
+    [control]="registerForm.get('name')"
+    [errors]="[
+      { error: 'required', message: '*Name is required' },
+      { error: 'minLength', message: '*Minimum 2 characters required' },
+      { error: 'pattern', message: '*Only letters and spaces allowed' },
+    ]"
+  />
+
+  <!-- Email -->
+  <app-auth-input
+    formControlName="email"
+    inputType="email"
+    label="Email*"
+    inputId="email"
+    [control]="registerForm.get('email')"
+    [errors]="[
+      { error: 'required', message: '*Email is required' },
+      { error: 'email', message: '*Invalid email address' },
+    ]"
+  />
+
+  <!-- password -->
+  <div class="flex flex-col gap-4">
+    <app-auth-input
+      [formType]="'signup'"
+      formControlName="password"
+      inputType="password"
+      label="Password*"
+      inputId="password"
+      [control]="registerForm.get('password')"
+      [errors]="[
+        { error: 'required', message: '*Password is required' },
+        {
+          error: 'password',
+          message:
+            '*Password must be at least 8 characters and include uppercase, lowercase, number, and special character',
+        },
+      ]"
+    />
+    <div class="text-secondary-400 flex items-center justify-center gap-2.5 text-sm">
+      <div class="h-1 w-full rounded-full bg-gray-300">
+        <div
+          [style.width]="(score() * 100) / 7 + '%'"
+          [style.background-color]="passwordScoreColor()"
+          class="h-full rounded-full"
+        ></div>
+      </div>
+      {{ passwordScoreStrong() }}
+    </div>
+  </div>
+
+  <!-- rePassword -->
+  <app-auth-input
+    [formType]="'signup'"
+    formControlName="rePassword"
+    inputType="password"
+    label="Confirm Password*"
+    inputId="rePassword"
+    [control]="registerForm.get('rePassword')"
+    [errors]="[
+      { error: 'required', message: '*Please confirm your password' },
+      { error: 'compare', message: '*Passwords do not match' },
+    ]"
+  />
+
+  <!-- phone -->
+  <app-auth-input
+    formControlName="phone"
+    inputType="text"
+    label="Phone Number*"
+    inputId="phone"
+    [control]="registerForm.get('phone')"
+    [errors]="[
+      { error: 'required', message: '*Please enter your phone number' },
+      { error: 'egyptPhone', message: '*Only Egyptian phone numbers are allowed' },
+    ]"
+  />
+
+  <!-- Keep me signed in -->
+  <div>
+    @let terms = registerForm.get('terms');
+    <label class="flex cursor-pointer items-center gap-2 text-xs font-semibold">
+      <input type="checkbox" formControlName="terms" class="h-4 w-4" />
+      I agree to the
+      <a routerLink="/privacy" class="text-primary-500 transition duration-300 hover:underline">
+        Terms of Service</a
+      >and
+      <a href="/terms" class="text-primary-500 transition duration-300 hover:underline"
+        >Privacy Policy</a
+      >*
+    </label>
+    @if (terms?.touched && terms?.errors !== null) {
+      <p class="text-danger-500 ms-1 mt-2 text-xs font-semibold">
+        *You must accept the terms and conditions
+      </p>
+    }
+  </div>
+
+  <!-- Create Account Button -->
+  <app-auth-submit-button
+    text="Create My Account"
+    type="submit"
+    [isLoading]="isLoading()"
+    (onSubmit)="onSubmit()"
+  />
+</form>

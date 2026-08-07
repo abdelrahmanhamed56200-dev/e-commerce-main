@@ -1,0 +1,57 @@
+<div
+  [class]="
+    paymentMethodType() === 'cash'
+      ? 'border border-yellow-100 bg-yellow-50'
+      : 'border border-blue-100 bg-blue-50'
+  "
+  class="rounded-xl p-4"
+>
+  <!-- Order Summary -->
+  <div class="mb-2 flex items-center gap-2">
+    <span
+      [class]="paymentMethodType() === 'cash' ? 'bg-orange-400' : 'bg-blue-400'"
+      class="flex h-7 w-7 items-center justify-center rounded"
+    >
+      @if (paymentMethodType() === 'cash') {
+        <i class="fa-solid fa-clock text-xs text-white"></i>
+      } @else {
+        <i class="fa-solid fa-truck text-xs text-white"></i>
+      }
+    </span>
+
+    <span class="text-secondary-700 font-semibold">Order Summary</span>
+  </div>
+
+  <!-- Subtotal -->
+  <div class="text-secondary-500 mb-2 flex justify-between text-sm font-medium">
+    <span>Subtotal</span>
+    <span>{{ totalOrderPrice() - shippingPrice() - taxPrice() }} EGP</span>
+  </div>
+
+  <!-- Tax -->
+  <div class="text-secondary-500 mb-2 flex justify-between text-sm font-medium">
+    <span>Tax Price</span>
+    <span> {{ taxPrice() }} EGP</span>
+  </div>
+
+  <!-- Shipping -->
+  <div
+    [class]="paymentMethodType() === 'cash' ? 'border-yellow-200' : 'border-blue-200'"
+    class="text-secondary-500 mb-3 flex justify-between border-b pb-3 text-sm font-medium"
+  >
+    <span>Shipping</span>
+    <span>
+      @if (shippingPrice() > 0) {
+        {{ shippingPrice() }} EGP
+      } @else {
+        Free
+      }
+    </span>
+  </div>
+
+  <!-- Total -->
+  <div class="text-secondary-900 flex justify-between font-bold">
+    <span>Total</span>
+    <span>{{ totalOrderPrice() }} EGP</span>
+  </div>
+</div>

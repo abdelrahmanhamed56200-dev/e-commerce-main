@@ -1,0 +1,163 @@
+<section class="overflow-hidden rounded-2xl border border-gray-100 shadow-sm">
+  <!-- Header -->
+  <div [class]="isLogged() ? 'bg-primary-500' : 'bg-secondary-900'" class="px-5 py-4">
+    <h3 class="flex items-center gap-2 text-lg font-bold text-white">
+      @if (isLogged()) {
+        <i class="fa-solid fa-lock text-sm"></i> Order Summary
+      } @else {
+        Order Summary
+      }
+    </h3>
+    @if (isLogged()) {
+      <p class="mt-0.5 text-sm text-white/80">{{ numberOfItems() }} items in your cart</p>
+    }
+  </div>
+
+  <!-- Body -->
+  <div class="flex flex-col gap-4 px-5 py-5">
+    <!-- Shipping Progress Banner -->
+    @if (priceToFreeShipping() > 0 && isLogged()) {
+      <div class="flex flex-col gap-2 rounded-xl bg-orange-50 p-3">
+        <p class="text-secondary-700 flex items-center gap-2 text-sm font-semibold">
+          <i class="fa-solid fa-truck-fast text-orange-400"></i>
+          Add {{ priceToFreeShipping() }} EGP for free shipping
+        </p>
+        <div class="h-2 w-full overflow-hidden rounded-full bg-orange-100">
+          <div
+            [style]="'width:' + freeShippingPercentage() + '%'"
+            class="h-full rounded-full bg-orange-400"
+          ></div>
+        </div>
+      </div>
+    }
+
+    <!-- Free Shipping Banner -->
+    @if (isLogged()) {
+      <div class="bg-primary-100/50 flex items-center gap-3 rounded-xl p-3">
+        <div
+          class="bg-primary-100 flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+        >
+          <i class="fa-solid fa-truck-fast text-primary-500 text-sm"></i>
+        </div>
+        <div>
+          <p class="text-primary-600 text-sm font-bold">Free Shipping!</p>
+          <p class="text-primary-500 text-xs">You qualify for free delivery</p>
+        </div>
+      </div>
+    }
+
+    <!-- Subtotal -->
+    <div class="flex items-center justify-between">
+      <span class="text-secondary-500 text-sm">Subtotal ({{ numberOfItems() }} items)</span>
+      <span class="text-secondary-800 text-sm font-semibold">{{ totalPrice() }} EGP</span>
+    </div>
+
+    <!-- Shipping -->
+    <div class="flex items-center justify-between">
+      <span class="text-secondary-500 text-sm">Shipping</span>
+      <span class="text-primary-500 text-sm font-semibold">
+        @if (isLogged()) {
+          @if (totalPrice() > 550) {
+            FREE
+          } @else {
+            50 EGP
+          }
+        } @else {
+          Calculated at checkout
+        }
+      </span>
+    </div>
+
+    <!-- Estimated Total -->
+    <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+      <p class="text-secondary-800 font-bold">
+        @if (isLogged()) {
+          Total
+        } @else {
+          Estimated Total
+        }
+      </p>
+      <p class="text-primary-500 text-base font-bold">
+        @if (totalPrice() > 550) {
+          {{ totalPrice() }}
+        } @else {
+          {{ totalPrice() + 50 }}
+        }
+
+        <span class="text-secondary-500">EGP</span>
+      </p>
+    </div>
+
+    @if (isLogged()) {
+      <!-- Promo Code -->
+      <div>
+        <button
+          (click)="openPromoModal()"
+          class="text-secondary-500 hover:border-primary-400 hover:text-primary-500 flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-gray-300 py-2.5 text-sm font-medium transition duration-300"
+        >
+          <i class="fa-solid fa-tag text-sm"></i> Apply Promo Code
+        </button>
+      </div>
+
+      <!-- Checkout Button -->
+      <a
+        routerLink="/checkout"
+        class="bg-primary-500 hover:bg-primary-600 flex w-full items-center justify-center gap-2 rounded-xl py-3 font-bold text-white transition duration-300"
+      >
+        <i class="fa-solid fa-lock text-sm"></i> Secure Checkout
+      </a>
+    } @else {
+      <!-- Checkout Button -->
+      <a
+        routerLink="/login"
+        [queryParams]="{ redirectTo: '/cart' }"
+        class="bg-primary-500 hover:bg-primary-600 flex w-full items-center justify-center gap-2 rounded-xl py-3 font-bold text-white transition duration-300"
+      >
+        <i class="fa-solid fa-user text-sm"></i> Login to Checkout
+      </a>
+    }
+
+    @if (isLogged()) {
+      <!-- Trust Badges -->
+      <div class="flex items-center justify-center gap-4">
+        <p class="text-secondary-400 flex items-center gap-1.5 text-xs">
+          <i class="fa-solid fa-shield-halved text-primary-500 text-sm"></i> Secure Payment
+        </p>
+        <div class="h-4 w-px bg-gray-200"></div>
+        <p class="text-secondary-400 flex items-center gap-1.5 text-xs">
+          <i class="fa-solid fa-truck-fast text-primary-500 text-sm"></i> Fast Delivery
+        </p>
+      </div>
+
+      <!-- Continue Shopping -->
+      <a
+        routerLink="/products"
+        class="text-primary-500 group flex items-center justify-center gap-1 text-center text-sm font-medium transition"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-xs transition duration-300 group-hover:-translate-x-1"
+        ></i>
+        Continue Shopping
+      </a>
+    } @else {
+      <!-- Sign up link -->
+      <p class="text-secondary-400 text-center text-xs">
+        Don't have an account?
+        <a routerLink="/signup" class="text-primary-500 font-semibold hover:underline">Sign up</a>
+      </p>
+
+      <!-- Benefits -->
+      <div class="flex flex-col gap-1.5 pt-1">
+        <p class="text-secondary-400 flex items-center gap-1.5 text-xs">
+          <i class="fa-solid fa-check text-primary-500 text-xs"></i> Your cart items will be saved
+        </p>
+        <p class="text-secondary-400 flex items-center gap-1.5 text-xs">
+          <i class="fa-solid fa-check text-primary-500 text-xs"></i> Track your orders easily
+        </p>
+        <p class="text-secondary-400 flex items-center gap-1.5 text-xs">
+          <i class="fa-solid fa-check text-primary-500 text-xs"></i> Access exclusive member deals
+        </p>
+      </div>
+    }
+  </div>
+</section>

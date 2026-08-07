@@ -1,0 +1,20 @@
+<!-- bread crumbs -->
+<app-breadcrumbs-card
+  [iconConfig]="{ type: 'icon', value: 'fa-solid fa-layer-group' }"
+  title="All Categories"
+  description="Browse our wide range of product categories"
+  pageTitle="Categories"
+/>
+@if (isLoading()) {
+  <app-categories-skeleton-category-card />
+} @else if (!isLoading() && allCategories().length > 0) {
+  <!-- allCategories -->
+  <app-categories-all-categories [categories]="allCategories()" />
+} @else {
+  <app-not-found-produces
+    title="No Categories Found"
+    text="No categories found for now."
+    [isEmpty]="!isLoading()"
+    (onClearFilters)="onClearFilters()"
+  />
+}

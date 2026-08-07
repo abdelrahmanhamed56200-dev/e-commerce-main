@@ -1,0 +1,88 @@
+<div class="sticky top-20 overflow-hidden rounded-2xl border border-gray-100 shadow-sm">
+  <!-- Header -->
+  <div class="bg-primary-500 px-5 py-4">
+    <h3 class="flex items-center gap-2 text-base font-bold text-white">
+      <i class="fa-solid fa-lock text-sm"></i> Order Summary
+    </h3>
+    <p class="mt-0.5 text-sm text-white/80">{{ cartRes().numOfCartItems }} Items</p>
+  </div>
+
+  <!-- Body -->
+  <div class="flex flex-col gap-4 px-4 py-4">
+    <!-- Items List (scrollable) -->
+    <div class="flex max-h-48 flex-col gap-3 overflow-y-auto pr-1">
+      @for (item of cartRes().data.products; track item._id) {
+        <app-order-item [cartItem]="item" />
+      }
+    </div>
+
+    <!-- Subtotal -->
+    <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+      <span class="text-secondary-500 text-sm">Subtotal</span>
+      <span class="text-secondary-700 text-sm font-semibold">
+        {{ cartRes().data.totalCartPrice }} EGP
+      </span>
+    </div>
+
+    <!-- Shipping -->
+    <div class="flex items-center justify-between">
+      <span class="text-secondary-500 flex items-center gap-1.5 text-sm">
+        <i class="fa-solid fa-truck-fast text-secondary-400 text-xs"></i> Shipping
+      </span>
+      <span class="text-secondary-700 text-sm font-semibold">
+        @if (cartRes().data.totalCartPrice > 550) {
+          FREE
+        } @else {
+          50 EGP
+        }
+      </span>
+    </div>
+
+    <!-- Total -->
+    <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+      <span class="text-secondary-800 font-bold">Total</span>
+      <p class="text-primary-500 text-lg leading-none font-extrabold">
+        @if (cartRes().data.totalCartPrice > 550) {
+          {{ cartRes().data.totalCartPrice }}
+        } @else {
+          {{ cartRes().data.totalCartPrice + 50 }}
+        }
+        <span class="text-sm font-semibold">EGP</span>
+      </p>
+    </div>
+
+    <!-- Place Order Button -->
+    <button
+      (click)="checkout()"
+      class="bg-primary-500 hover:bg-primary-600 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl py-3 font-bold text-white transition duration-300"
+    >
+      @if (isLoading()) {
+        <i class="fa-solid fa-spinner animate-spin text-sm"></i> processing...
+      } @else {
+        @if (paymentType() === 'cash') {
+          <i class="fa-solid fa-box text-sm"></i> Place Order
+        } @else {
+          <i class="fa-solid fa-shield-halved text-sm"></i>
+          Proceed to Payment
+        }
+      }
+    </button>
+
+    <!-- Trust Badges -->
+    <div class="flex flex-wrap items-center justify-center gap-2">
+      <span class="text-secondary-400 flex items-center gap-1 text-xs">
+        <i class="fa-solid fa-shield-halved text-primary-500"></i> Secure
+      </span>
+      <div class="h-3 w-px bg-gray-200"></div>
+
+      <span class="text-secondary-400 flex items-center gap-1 text-xs">
+        <i class="fa-solid fa-truck-fast text-blue-400"></i> Fast Delivery
+      </span>
+      <div class="h-3 w-px bg-gray-200"></div>
+
+      <span class="text-secondary-400 flex items-center gap-1 text-xs">
+        <i class="fa-solid fa-rotate-left text-orange-400"></i> Easy Returns
+      </span>
+    </div>
+  </div>
+</div>

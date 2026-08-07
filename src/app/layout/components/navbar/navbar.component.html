@@ -1,0 +1,528 @@
+<!-- Top Bar -->
+<div class="text-secondary-400 hidden border-b border-gray-100 px-6 py-2.5 text-sm lg:block">
+  <div class="container mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <span>
+        <i class="fa-solid fa-truck text-primary-500 mr-1"></i>
+        Free Shipping on Orders 500 EGP
+      </span>
+      <span>
+        <i class="fa-solid fa-store text-primary-500"></i>
+        New Arrivals Daily
+      </span>
+    </div>
+
+    <div class="flex min-w-0 items-center gap-3.5">
+      <a
+        href="tel:+18001234567"
+        target="_blank"
+        class="hover:text-primary-500 flex cursor-pointer items-center gap-1 transition"
+      >
+        <i class="fa-solid fa-phone text-primary-500"></i>
+        +1 (800) 123-4567
+      </a>
+      <a
+        href="mailto:support@freshcart.com"
+        target="_blank"
+        class="hover:text-primary-500 flex cursor-pointer items-center gap-1 transition"
+      >
+        <i class="fa-regular fa-envelope text-primary-500"></i>
+        support@freshcart.com
+      </a>
+
+      <span class="text-gray-500">|</span>
+
+      @if (isLogged()) {
+        <a routerLink="/profile" class="hover:text-primary-500 cursor-pointer truncate transition">
+          <i class="fa-regular fa-user mr-0.5"></i>
+          {{ user()?.name?.slice(0, 10) }}
+        </a>
+        <button (click)="logout()" class="hover:text-danger-500 cursor-pointer transition">
+          <i class="fa-solid fa-arrow-right-from-bracket mr-0.5"></i>
+          Sign Out
+        </button>
+      } @else {
+        <a routerLink="/login" class="hover:text-primary-500 cursor-pointer transition">
+          <i class="fa-regular fa-user mr-0.5"></i>
+          Sign In
+        </a>
+        <a routerLink="/signup" class="hover:text-primary-500 cursor-pointer transition">
+          <i class="fa-solid fa-user-plus mr-0.5"></i>
+          Sign Up
+        </a>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="sticky inset-x-0 top-0 z-50 bg-white px-6 py-3 shadow-xl">
+  <div class="container mx-auto flex items-center justify-between gap-6">
+    <!-- Logo -->
+    <a
+      routerLink="/"
+      routerLinkActive="''"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="flex w-40 items-center rounded-xl bg-white p-2 lg:w-48"
+    >
+      <img src="/assets/images/freshcart-logo.svg" alt="fresh cart logo" />
+    </a>
+
+    <!-- Search Bar -->
+    <div class="hidden max-w-xl flex-1 lg:flex">
+      <input
+        #searchInput
+        id="searchInput"
+        type="text"
+        placeholder="Search for products, brands and more..."
+        class="border-secondary-200 focus:border-primary-500 w-full rounded-l-full border px-4 py-2 text-sm outline-none"
+      />
+      <button
+        (click)="onSearch(searchInput.value)"
+        class="bg-primary-500 hover:bg-primary-600 rounded-r-full px-4 text-white transition"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <!-- Nav Links -->
+    <ul class="text-secondary-400 hidden items-center gap-6 text-sm font-medium lg:flex">
+      <li>
+        <a
+          routerLink="/"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="text-primary-500"
+          class="hover:text-primary-500 font-semibold transition"
+          >Home</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/products"
+          routerLinkActive="text-primary-500"
+          class="hover:text-primary-500 font-semibold transition"
+        >
+          Shop
+        </a>
+      </li>
+
+      <!-- Categories Dropdown -->
+      <li class="group relative">
+        <button class="hover:text-primary-500 flex items-center gap-1 font-semibold transition">
+          Categories
+          <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        @if (categories()) {
+          <ul
+            class="invisible absolute top-7 left-0 z-51 w-48 translate-y-2 overflow-hidden rounded-lg border border-gray-100 bg-white opacity-0 shadow-lg transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+          >
+            <li>
+              <a
+                routerLinkActive="text-primary-600! bg-primary-100!"
+                routerLink="/categories"
+                class="text-secondary-400 block px-4 py-2 text-sm hover:bg-gray-100"
+                >All Categories</a
+              >
+            </li>
+
+            @for (category of categories(); track category._id) {
+              <li>
+                <a
+                  routerLinkActive="text-primary-600! bg-primary-100!"
+                  [routerLink]="['/products']"
+                  [queryParams]="{ category: category._id, slug: category.slug }"
+                  class="text-secondary-400 block px-4 py-2 text-sm hover:bg-gray-100"
+                  >{{ category.name }}</a
+                >
+              </li>
+            }
+          </ul>
+        }
+      </li>
+
+      <li>
+        <a
+          routerLink="/brands"
+          routerLinkActive="text-primary-500"
+          class="hover:text-primary-500 font-semibold transition"
+          >Brands</a
+        >
+      </li>
+    </ul>
+
+    <div class="flex items-center gap-4 text-gray-600">
+      <!-- Support -->
+      <a
+        routerLink="/contact"
+        class="hover:text-primary-500 group/support hidden cursor-pointer items-center gap-2 transition lg:flex"
+      >
+        <span class="bg-primary-100/50 flex h-8 w-8 items-center justify-center rounded-full">
+          <i class="fa-solid fa-headset text-primary-500 text-xl"></i>
+        </span>
+        <div class="text-[14px] leading-tight">
+          <p class="text-secondary-800 group-hover/support:text-primary-600 font-semibold">
+            Support
+          </p>
+          <p class="text-secondary-500 group-hover/support:text-primary-500">24/7 Help</p>
+        </div>
+      </a>
+
+      <!-- wishlistCount -->
+      <a
+        routerLink="/wishlist"
+        routerLinkActive="text-primary-500"
+        class="hover:text-primary-500 relative text-xl transition"
+      >
+        <i class="fa-regular fa-heart"></i>
+        @if (wishlistCount() > 0) {
+          <div
+            class="text-2xs bg-primary-500 border-buffer absolute -inset-e-2 -top-2 inline-flex h-5.5 w-5.5 items-center justify-center rounded-full border-2 font-bold text-white"
+          >
+            {{ wishlistCount() > 9 ? '9+' : wishlistCount() }}
+          </div>
+        }
+      </a>
+
+      <!-- cartCount -->
+      <a
+        routerLink="/cart"
+        routerLinkActive="text-primary-500"
+        class="hover:text-primary-500 relative text-xl transition"
+      >
+        <i class="fa-solid fa-cart-shopping"></i>
+        @if (cartCount() > 0) {
+          <div
+            class="text-2xs bg-primary-500 border-buffer absolute -inset-e-2 -top-2 inline-flex h-5.5 w-5.5 items-center justify-center rounded-full border-2 font-bold text-white"
+          >
+            {{ cartCount() > 9 ? '9+' : cartCount() }}
+          </div>
+        }
+      </a>
+
+      <!--  user dropdown & Sign In -->
+      @if (isLogged() && user()) {
+        <div class="relative">
+          <button
+            (click)="toggleUserDropdown()"
+            class="text-secondary-300 hover:text-primary-500 hidden h-11 w-11 items-center justify-center rounded-full text-2xl transition hover:bg-gray-100 lg:flex"
+          >
+            <i class="fa-regular fa-circle-user"></i>
+          </button>
+
+          @if (isUserDropdown()) {
+            <section
+              class="absolute top-full right-0 hidden min-w-50 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl lg:block"
+            >
+              <div class="flex min-w-0 items-center gap-3 border-b border-gray-200 p-4">
+                <div
+                  class="bg-primary-100 flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+                >
+                  <i class="fa-regular fa-circle-user text-primary-600 text-2xl"></i>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-secondary-800 truncate text-sm font-semibold">
+                    {{ user()?.name?.slice(0, 10) }}
+                  </p>
+                  <p class="text-secondary-400 truncate text-xs">{{ user()?.email }}</p>
+                </div>
+              </div>
+
+              <ul class="px-2 py-3">
+                <li>
+                  <a
+                    (click)="closeUserDropdown()"
+                    routerLink="/profile"
+                    class="sm text-secondary-600 hover:bg-primary-100 hover:text-primary-700 group flex items-center gap-3 rounded-lg px-4 py-2.5 font-medium transition-colors"
+                  >
+                    <i
+                      class="fa-regular fa-user text-secondary-300 group-hover:text-primary-600 w-5 text-center transition-colors"
+                    ></i>
+                    My Profile
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    routerLink="/allorders"
+                    (click)="closeUserDropdown()"
+                    class="text-secondary-600 hover:bg-primary-100 hover:text-primary-700 group flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors"
+                  >
+                    <i
+                      class="fa-solid fa-box-open text-secondary-400 group-hover:text-primary-600 w-5 text-center transition-colors"
+                    ></i>
+                    My Orders
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    routerLink="/wishlist"
+                    (click)="closeUserDropdown()"
+                    class="text-secondary-600 hover:bg-primary-100 hover:text-primary-700 group flex items-center gap-3 rounded-lg px-4 py-2.5 transition-colors"
+                  >
+                    <i
+                      class="fa-regular fa-heart text-secondary-400 group-hover:text-primary-600 w-5 text-center text-sm font-medium transition-colors"
+                    ></i
+                    >My Wishlist
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    routerLink="/profile/addresses"
+                    (click)="closeUserDropdown()"
+                    class="text-secondary-600 hover:bg-primary-100 hover:text-primary-700 group flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors"
+                  >
+                    <i
+                      class="fa-regular fa-address-card text-secondary-400 group-hover:text-primary-600 w-5 text-center transition-colors"
+                    ></i
+                    >Addresses
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    routerLink="profile/settings"
+                    (click)="closeUserDropdown()"
+                    class="text-secondary-600 hover:bg-primary-100 hover:text-primary-700 group flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors"
+                  >
+                    <i
+                      class="fa-solid fa-gear text-secondary-400 group-hover:text-primary-600 w-5 text-center transition-colors"
+                    ></i
+                    >Settings
+                  </a>
+                </li>
+              </ul>
+
+              <div class="border-t border-gray-200 px-2 pt-2 pb-3">
+                <button
+                  (click)="logout()"
+                  class="text-danger-500 hover:bg-danger-100 flex w-full items-center gap-3 rounded-lg px-4 py-2.5 transition-colors"
+                >
+                  <i class="fa-solid fa-right-from-bracket w-5 text-center"></i>
+                  <span class="text-sm font-medium">Sign Out</span>
+                </button>
+              </div>
+            </section>
+          }
+        </div>
+      } @else {
+        <a
+          routerLink="/login"
+          class="bg-primary-500 hover:bg-primary-600 hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white transition lg:flex"
+        >
+          <i class="fa-regular fa-user"></i>
+          Sign In
+        </a>
+      }
+
+      <!-- burger bars -->
+      <button
+        (click)="openSidebar()"
+        class="text-primary-500 hover:bg-primary-100 flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-xl transition lg:hidden"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- aside -->
+@defer (when isDrawerOpen()) {
+  <aside
+    [class.translate-x-0]="isDrawerOpen()"
+    [class.translate-x-full]="!isDrawerOpen()"
+    class="fixed top-0 right-0 z-53 flex h-screen w-72 flex-col gap-5 overflow-y-auto bg-gray-50 p-5 shadow-xl transition-transform duration-300 lg:hidden"
+  >
+    <div class="flex items-center justify-between">
+      <a
+        routerLink="/"
+        (click)="closeSidebar()"
+        class="text-secondary-500 flex items-center gap-2 text-xl font-bold"
+      >
+        <img src="/assets/images/freshcart-logo.svg" alt="fresh cart logo" />
+      </a>
+
+      <button (click)="closeSidebar()" class="text-xl text-gray-400 transition hover:text-gray-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="flex border-b border-gray-200 pb-4">
+      <input
+        #asideSearchInput
+        id="asideSearchInput"
+        type="text"
+        placeholder="Search products..."
+        class="focus:border-primary-500 w-full rounded-l-full border border-gray-200 bg-white px-4 py-2 text-sm outline-none"
+      />
+      <button
+        (click)="onSearch(asideSearchInput.value)"
+        class="bg-primary-500 hover:bg-primary-600 rounded-r-full px-4 text-white transition"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <!-- Nav Links -->
+    <ul
+      class="text-secondary-500 flex flex-col items-stretch gap-1 border-b border-gray-200 pb-4 text-base font-medium"
+    >
+      <li>
+        <a
+          routerLink="/"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="text-primary-500"
+          (click)="closeSidebar()"
+          class="hover:text-primary-500 hover:bg-primary-100/80 inline-block w-full rounded-xl px-2 py-2 transition"
+          >Home</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/products"
+          routerLinkActive="text-primary-500"
+          (click)="closeSidebar()"
+          class="hover:text-primary-500 hover:bg-primary-100/80 inline-block w-full rounded-xl px-2 py-2 transition"
+          >Shop</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/categories"
+          routerLinkActive="text-primary-500"
+          (click)="closeSidebar()"
+          class="hover:text-primary-500 hover:bg-primary-100/80 inline-block w-full rounded-xl px-2 py-2 transition"
+          >Categories</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/brands"
+          routerLinkActive="text-primary-500"
+          (click)="closeSidebar()"
+          class="hover:text-primary-500 hover:bg-primary-100/80 inline-block w-full rounded-xl px-2 py-2 transition"
+          >Brands</a
+        >
+      </li>
+      @if (isLogged()) {
+        <li>
+          <a
+            routerLink="/allorders"
+            routerLinkActive="text-primary-500"
+            (click)="closeSidebar()"
+            class="hover:text-primary-500 hover:bg-primary-100/80 inline-block w-full rounded-xl px-2 py-2 transition"
+            >My Orders</a
+          >
+        </li>
+      }
+    </ul>
+
+    <!-- Wishlist & Cart -->
+    <div class="flex flex-col gap-2 border-b border-gray-200 pb-4">
+      <a
+        routerLink="/wishlist"
+        (click)="closeSidebar()"
+        class="hover:text-primary-500 hover:bg-primary-100/80 text-secondary-500 flex items-center gap-3 rounded-xl px-1 py-2 font-medium transition"
+      >
+        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-red-100">
+          <i class="fa-regular fa-heart text-red-400"></i>
+        </span>
+        Wishlist
+        @if (wishlistCount() > 0) {
+          <div
+            class="text-2xs bg-primary-500 border-buffer ms-auto inline-flex h-5.5 w-5.5 items-center justify-center rounded-full border-2 font-bold text-white"
+          >
+            {{ wishlistCount() > 9 ? '9+' : wishlistCount() }}
+          </div>
+        }
+      </a>
+      <a
+        routerLink="/cart"
+        (click)="closeSidebar()"
+        class="hover:text-primary-500 hover:bg-primary-100/80 text-secondary-500 flex items-center gap-3 rounded-xl px-1 py-2 font-medium transition duration-300"
+      >
+        <span class="bg-primary-100 flex h-9 w-9 items-center justify-center rounded-full">
+          <i class="fa-solid fa-cart-shopping text-primary-500"></i>
+        </span>
+        Cart
+        @if (cartCount() > 0) {
+          <div
+            class="text-2xs bg-primary-500 border-buffer ms-auto inline-flex h-6 w-6 items-center justify-center rounded-full border-2 font-bold text-white"
+          >
+            {{ cartCount() > 9 ? '9+' : cartCount() }}
+          </div>
+        }
+      </a>
+    </div>
+
+    @if (isLogged() && user()) {
+      <div class="flex flex-col gap-2 border-b border-gray-200 pb-4">
+        <a
+          (click)="closeUserDropdown(); closeSidebar()"
+          routerLink="/profile"
+          class="text-secondary-600 hover:bg-primary-100 hover:text-primary-700 group flex items-center gap-2 rounded-lg px-4 py-3 transition-colors"
+        >
+          <span
+            class="text-secondary-500 -ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-gray-50"
+          >
+            <i class="fa-regular fa-user"></i>
+          </span>
+          <span class="font-medium">My Profile</span>
+        </a>
+        <button
+          (click)="logout(); closeSidebar()"
+          class="hover:text-danger-500 text-secondary-600 hover:bg-danger-100 group flex items-center gap-2 rounded-lg px-4 py-3 transition-colors"
+        >
+          <span
+            class="text-danger-500 bg-danger-100/50 -ml-1 flex h-7 w-7 items-center justify-center rounded-full"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </span>
+          Sign Out
+        </button>
+      </div>
+    } @else {
+      <!-- Sign In / Sign Up -->
+      <div class="flex gap-3">
+        <a
+          routerLink="/login"
+          (click)="closeSidebar()"
+          class="bg-primary-500 hover:bg-primary-600 flex-1 rounded-full py-2.5 text-center font-semibold text-white transition"
+        >
+          Sign In
+        </a>
+        <a
+          routerLink="/signup"
+          (click)="closeSidebar()"
+          class="border-primary-500 text-primary-500 hover:bg-primary-50 flex-1 rounded-full border-2 py-2.5 text-center font-semibold transition"
+        >
+          Sign Up
+        </a>
+      </div>
+    }
+    <!-- Need Help -->
+    <a
+      routerLink="/contact"
+      class="hover:bg-primary-100 flex items-center gap-3 rounded-xl border border-gray-100 bg-white p-3 shadow-sm transition duration-300 hover:cursor-pointer"
+    >
+      <span class="bg-primary-100 flex h-9 w-9 items-center justify-center rounded-full">
+        <i class="fa-solid fa-headset text-primary-500"></i>
+      </span>
+      <div>
+        <p class="text-secondary-700 text-sm font-semibold">Need Help?</p>
+        <a routerLink="/contact" (click)="closeSidebar()" class="text-primary-500 text-sm"
+          >Contact Support</a
+        >
+      </div>
+    </a>
+  </aside>
+}
+
+<!-- Overlay -->
+<div
+  (click)="closeSidebar()"
+  [class.hidden]="!isDrawerOpen()"
+  class="fixed inset-0 z-50 bg-black/50 lg:hidden"
+></div>

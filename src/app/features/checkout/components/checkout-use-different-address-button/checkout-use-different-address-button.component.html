@@ -1,0 +1,25 @@
+<button
+  (click)="click()"
+  [class]="
+    activeId() === null
+      ? 'border-primary-500 shadow-primary-100 bg-primary-100/60 shadow-lg'
+      : 'hover:border-primary-300 bg-gray-50'
+  "
+  class="flex w-full cursor-pointer items-start gap-3 rounded-xl border-2 border-dashed border-gray-200 p-4 transition duration-300"
+>
+  <div
+    [class]="activeId() === null ? 'bg-primary-500 text-white' : 'text-secondary-400 bg-gray-200'"
+    class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition duration-300"
+  >
+    <i class="fa-solid fa-plus"></i>
+  </div>
+  <div>
+    <p
+      [class]="activeId() === null ? 'text-primary-600' : 'text-secondary-600'"
+      class="text-start font-semibold transition duration-300"
+    >
+      Use a different address
+    </p>
+    <p class="text-secondary-500 text-sm">Enter a new shipping address manually</p>
+  </div>
+</button>

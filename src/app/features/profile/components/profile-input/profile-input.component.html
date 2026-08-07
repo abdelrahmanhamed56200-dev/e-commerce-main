@@ -1,0 +1,60 @@
+<div>
+  <div class="relative">
+    <input
+      [id]="inputId()"
+      (input)="onInput($event.target.value)"
+      (blur)="onBluer()"
+      [disabled]="isDisabled()"
+      [type]="type()"
+      [value]="value()"
+      [placeholder]="placeholder()"
+      [aria-describedby]="'outlined_error_help' + inputId()"
+      [autocomplete]="autocomplete()"
+      [maxLength]="maxLength()"
+      [class]="
+        control()?.touched && control()?.valid
+          ? 'border-green-500 focus:border-green-500' + inputClass()
+          : control()?.touched && control()?.invalid
+            ? 'border-danger-500 focus:border-danger-500' + inputClass()
+            : '' + inputClass()
+      "
+      class="text-heading rounded-base focus:border-brand peer block w-full appearance-none border bg-transparent px-2.5 pt-4 pb-2.5 text-sm focus:ring-0 focus:outline-none"
+    />
+    <label
+      [for]="inputId()"
+      [class]="
+        control()?.touched && control()?.valid
+          ? 'text-green-500 peer-focus:text-green-500!'
+          : control()?.touched && control()?.invalid
+            ? 'text-danger-500 peer-focus:text-danger-500!'
+            : ''
+      "
+      class="text-body bg-neutral-primary peer-focus:text-fg-brand absolute inset-s-1 top-2 z-10 origin-left -translate-y-4 scale-80 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-85 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+    >
+      {{ label() }}
+    </label>
+
+    @if (inputType() === 'password') {
+      <button
+        (click)="type() === 'password' ? type.set('text') : type.set('password')"
+        class="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-400 transition duration-300 hover:text-gray-600"
+      >
+        @if (type() === 'password') {
+          <i class="fa-solid fa-eye"></i>
+        } @else {
+          <i class="fa-solid fa-eye-slash"></i>
+        }
+      </button>
+    }
+  </div>
+  @for (error of errors(); track error.error) {
+    @if (control()?.touched && control()?.errors?.[error.error]) {
+      <p
+        [id]="'outlined_error_help' + inputId()"
+        class="text-danger-500 ms-1 mt-2 text-xs font-semibold"
+      >
+        {{ error.message }}
+      </p>
+    }
+  }
+</div>

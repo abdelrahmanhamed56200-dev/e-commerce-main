@@ -1,0 +1,85 @@
+<!-- search input & search value & number of founded products -->
+<app-search-input (onSearchInput)="onSearchInput($event)" [searchValue]="searchTerm()" />
+
+<div class="px-6">
+  <div class="container flex gap-5 pt-2 pb-5">
+    <div class="hidden lg:block">
+      <!-- Filters Sidebar -->
+      <div class="sticky top-15">
+        <app-search-filters-sidebar
+          [brands]="brands()"
+          [categories]="categories()"
+          [isActiveFilters]="activeFilters().length > 0"
+          [activeBrandsIds]="selectedBrandIds()"
+          [activeCategoriesIds]="selectedCategoryIds()"
+          [activePrice]="{ minPrice: minPrice(), maxPrice: maxPrice() }"
+          (onSelectedBrandsIds)="onSelectedBrandsIds($event)"
+          (onSelectedCategoriesIds)="onSelectedCategoriesIds($event)"
+          (onSetPriceRenege)="onSetPriceRenege($event)"
+          (onClearAllFilters)="onClearAllFilters()"
+        />
+      </div>
+    </div>
+
+    <div class="flex grow flex-col">
+      <div>
+        <!-- Grid View & sort by -->
+        <app-search-sortby-grid-view
+          [sortValue]="sortBy()"
+          [changDisplay]="displayMode()"
+          [setActiveDisplay]="displayMode()"
+          (onSortValue)="onSortValue($event)"
+          (onChangDisplay)="onSetDisplayGrid($event)"
+          (onOpenFilters)="onOpenFiltersDrawer()"
+        />
+
+        <!-- ActiveFilters  -->
+        <app-active-filters
+          [filters]="activeFilters()"
+          (onRemoveFilter)="onRemoveFilter($event)"
+          (onClearFilters)="onClearAllFilters()"
+        />
+
+        <!-- No Products Found -->
+
+        <app-not-found-produces
+          title="No Products Found"
+          text="Try adjusting your search or filters to find what you're looking for."
+          buttonText="Clear Filters"
+          iconClass="fa-solid fa-magnifying-glass"
+          [isEmpty]="products().length === 0 && !isLoading()"
+          (onClearFilters)="onClearAllFilters()"
+        />
+
+        <!-- Searching Products (loading) -->
+        <app-loading-products [isLoading]="isLoading()" />
+
+        <!-- Products Grid View -->
+        <app-search-products-grid-view
+          [isShow]="!isLoading()"
+          [products]="products()"
+          [currentPage]="currentPage()"
+          [totalProducts]="totalProducts()"
+          [displayMode]="displayMode()"
+          (onChangPage)="onChangPage($event)"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Drawer -->
+  <app-search-filters-drawer
+    [isOpen]="isOpenFiltersDrawer()"
+    [brands]="brands()"
+    [categories]="categories()"
+    [isActiveFilters]="activeFilters().length > 0"
+    [activeBrandsIds]="selectedBrandIds()"
+    [activeCategoriesIds]="selectedCategoryIds()"
+    [activePrice]="{ minPrice: minPrice(), maxPrice: maxPrice() }"
+    (onSelectedBrandsIds)="onSelectedBrandsIds($event)"
+    (onSelectedCategoriesIds)="onSelectedCategoriesIds($event)"
+    (onSetPriceRenege)="onSetPriceRenege($event)"
+    (onClearAllFilters)="onClearAllFilters()"
+    (onCloseFiltersDrawer)="onCloseFiltersDrawer()"
+  />
+</div>

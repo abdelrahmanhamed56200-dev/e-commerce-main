@@ -1,0 +1,43 @@
+<section class="relative h-80 w-full overflow-hidden">
+  <!-- Slides Wrapper -->
+  <swiper-container #swiperRef init="false" class="mySwipe h-full w-full">
+    @for (img of imgs; track $index) {
+      <swiper-slide class="relative h-full min-w-full shrink-0 bg-amber-400">
+        <div class="absolute inset-0">
+          <img [src]="img" [alt]="'slider' + $index" class="h-full object-fill" />
+        </div>
+        <div class="absolute inset-0 bg-black/5"></div>
+      </swiper-slide>
+    }
+
+    <swiper-slide class="relative h-full min-w-full shrink-0 bg-amber-400">
+      <div class="absolute inset-0">
+        <img src="/assets/images/div.swiper.png" alt="" class="h-full object-cover" />
+      </div>
+      <div class="bg-primary-600/70 absolute inset-0"></div>
+      <div class="animate container h-full px-6">
+        <div class="relative z-10 flex h-full flex-col justify-center">
+          <h2 class="mb-2 max-w-96 text-3xl leading-tight font-extrabold text-white">
+            Fresh Products Delivered to your Door
+          </h2>
+
+          <p class="mb-5 w-fit text-sm text-white">Get 20% off your first order</p>
+
+          <div class="flex gap-3">
+            <a
+              [routerLink]="'/products'"
+              class="text-primary-700 hover:bg-primary-50 rounded bg-white px-5 py-2.5 font-semibold transition duration-300 hover:scale-105"
+            >
+              Shop Now
+            </a>
+            <a
+              routerLink="/products"
+              class="rounded border border-white px-5 py-2.5 font-semibold text-white transition duration-300 hover:scale-105 hover:bg-white/10"
+              >View Deals</a
+            >
+          </div>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</section>

@@ -1,0 +1,43 @@
+<!-- bread crumbs -->
+<app-breadcrumbs-card
+  containerClass=" bg-purple-500"
+  [iconConfig]="{ type: 'icon', value: 'fa-solid fa-tags' }"
+  title="Top Brands"
+  description="Shop from your favorite brands"
+  pageTitle="Brands"
+/>
+
+<!-- All Brands -->
+@if (isLoading()) {
+  <section class="min-h-full px-6 py-8">
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <app-brands-skeleton-brand-card />
+      <app-brands-skeleton-brand-card />
+      <app-brands-skeleton-brand-card />
+      <app-brands-skeleton-brand-card />
+      <app-brands-skeleton-brand-card />
+      <app-brands-skeleton-brand-card />
+    </div>
+  </section>
+} @else if (brands().length > 0 && !isLoading()) {
+  <div class="-mb-5 bg-gray-50 py-5">
+    <app-brands-all-brands
+      [brands]="
+        brands()
+          | paginate
+            : { id: 'foo', itemsPerPage: limit(), currentPage: page(), totalItems: totalBrands() }
+      "
+    />
+    <div class="text-center">
+      <pagination-controls id="foo" (pageChange)="changePage($event)"></pagination-controls>
+    </div>
+  </div>
+} @else {
+  <app-not-found-produces
+    title="No Brands Found"
+    text="Brands will appear here once available."
+    iconClass="fa-solid fa-tags"
+    [isEmpty]="!isLoading()"
+    [disableButton]="true"
+  />
+}

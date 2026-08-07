@@ -1,0 +1,5 @@
+<div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+  @for (add of allAddresses(); track add._id) {
+    <app-address-card [address]="add" />
+  }
+</div>

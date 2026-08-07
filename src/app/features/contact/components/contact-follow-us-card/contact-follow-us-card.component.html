@@ -1,0 +1,15 @@
+<!-- ContactFollowUsCard -->
+<div class="flex flex-col gap-4 rounded-2xl border border-gray-100 p-5 shadow">
+  <p class="text-secondary-800 text-sm font-bold">Follow Us</p>
+  <div class="flex items-center gap-3">
+    @for (item of socialLinks; track $index) {
+      <a
+        [href]="item.link"
+        target="_blank"
+        class="text-secondary-500 hover:border-primary-400 hover:text-primary-500 flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 transition"
+      >
+        <i [class]="item.iconClass" class="text-sm"></i>
+      </a>
+    }
+  </div>
+</div>

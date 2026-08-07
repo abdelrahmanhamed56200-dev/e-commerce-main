@@ -1,0 +1,81 @@
+<div>
+  <div class="relative">
+    @if (inputType() !== 'textarea') {
+      <input
+        [id]="inputId()"
+        (input)="onInput($event.target.value)"
+        (blur)="onBluer()"
+        [disabled]="isDisabled()"
+        [type]="type()"
+        [value]="value()"
+        [placeholder]="placeholder()"
+        [aria-describedby]="'outlined_error_help' + inputId()"
+        [autocomplete]="autocomplete()"
+        [maxLength]="maxLength()"
+        [class]="
+          control()?.touched && control()?.valid
+            ? 'border-green-500 focus:border-green-500' + inputClass()
+            : control()?.touched && control()?.invalid
+              ? 'border-danger-500 focus:border-danger-500' + inputClass()
+              : '' + inputClass()
+        "
+        class="text-heading rounded-base focus:border-brand peer block w-full appearance-none border bg-transparent px-2.5 pt-4 pb-2.5 text-sm focus:ring-0 focus:outline-none"
+      />
+      <label
+        [for]="inputId()"
+        [class]="
+          control()?.touched && control()?.valid
+            ? 'text-green-500 peer-focus:text-green-500!'
+            : control()?.touched && control()?.invalid
+              ? 'text-danger-500 peer-focus:text-danger-500!'
+              : ''
+        "
+        class="text-body bg-neutral-primary peer-focus:text-fg-brand absolute inset-s-1 top-2 z-10 origin-left -translate-y-4 scale-80 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-85 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+      >
+        {{ label() }}
+      </label>
+    } @else {
+      <textarea
+        [id]="inputId()"
+        (input)="onInput($any($event.target).value)"
+        (blur)="onBluer()"
+        [disabled]="isDisabled()"
+        [value]="value()"
+        [placeholder]="placeholder()"
+        [aria-describedby]="'outlined_error_help' + inputId()"
+        rows="5"
+        [class]="
+          control()?.touched && control()?.valid
+            ? 'border-green-500 focus:border-green-500' + inputClass()
+            : control()?.touched && control()?.invalid
+              ? 'border-danger-500 focus:border-danger-500' + inputClass()
+              : '' + inputClass()
+        "
+        class="text-heading rounded-base focus:border-brand peer block w-full resize-none appearance-none border bg-transparent px-2.5 pt-4 pb-2.5 text-sm focus:ring-0 focus:outline-none"
+      ></textarea>
+      <label
+        [for]="inputId()"
+        [class]="
+          control()?.touched && control()?.valid
+            ? 'text-green-500 peer-focus:text-green-500!'
+            : control()?.touched && control()?.invalid
+              ? 'text-danger-500 peer-focus:text-danger-500!'
+              : ''
+        "
+        class="text-body bg-neutral-primary peer-focus:text-fg-brand absolute inset-s-1 top-2 z-10 origin-left -translate-y-4 scale-80 transform px-2 text-sm duration-300 peer-placeholder-shown:top-6 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-85 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+      >
+        {{ label() }}
+      </label>
+    }
+  </div>
+  @for (error of errors(); track error.error) {
+    @if (control()?.touched && control()?.errors?.[error.error]) {
+      <p
+        [id]="'outlined_error_help' + inputId()"
+        class="text-danger-500 ms-1 mt-2 text-xs font-semibold"
+      >
+        {{ error.message }}
+      </p>
+    }
+  }
+</div>

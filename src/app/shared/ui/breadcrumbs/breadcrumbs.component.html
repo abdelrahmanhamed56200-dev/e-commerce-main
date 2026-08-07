@@ -1,0 +1,24 @@
+<div [class]="containerClass()">
+  <a [routerLink]="homeLink()" [class]="linkClass()" class="transition">
+    {{ homeLabel() }}
+  </a>
+
+  @for (path of breadcrumbs(); track $index) {
+    <p [class]="separatorClass()">/</p>
+
+    <a
+      [routerLink]="path.link"
+      [queryParams]="path.queryParams || {}"
+      [class]="linkClass()"
+      class="transition"
+    >
+      {{ path.label }}
+    </a>
+  }
+
+  <p [class]="separatorClass()">/</p>
+
+  <p [class]="activeClass()">
+    {{ pageTitle() }}
+  </p>
+</div>

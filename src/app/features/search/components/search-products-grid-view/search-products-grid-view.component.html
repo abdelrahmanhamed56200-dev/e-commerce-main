@@ -1,0 +1,31 @@
+<section
+  [class]="isShow() && products().length > 0 ? 'opacity-100' : 'opacity-0'"
+  class="-mb-7 py-5 transition duration-300"
+>
+  <div
+    [class]="
+      displayMode() === 'grid'
+        ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'
+        : 'grid-cols-1'
+    "
+    class="grid gap-5"
+  >
+    @for (
+      product of products()
+        | paginate
+          : {
+              id: 'foo',
+              itemsPerPage: 12,
+              currentPage: currentPage(),
+              totalItems: totalProducts(),
+            };
+      track product._id
+    ) {
+      <app-product-card [product]="product" />
+    }
+  </div>
+
+  <div class="me-6 mt-auto pt-6 text-center">
+    <pagination-controls id="foo" (pageChange)="changPage($event)"></pagination-controls>
+  </div>
+</section>

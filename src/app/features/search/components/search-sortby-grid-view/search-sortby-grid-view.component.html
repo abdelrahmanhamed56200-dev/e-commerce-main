@@ -1,0 +1,55 @@
+<section class="py-4">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <button
+        (click)="openFilters()"
+        class="hover:border-primary-400 flex cursor-pointer items-center gap-2 rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-600 transition lg:hidden"
+      >
+        <i class="fa-solid fa-sliders text-gray-500"></i> Filters
+      </button>
+
+      <!-- Grid View (active) -->
+      <button
+        (click)="setDisplay('grid')"
+        [class]="
+          display() === 'grid'
+            ? 'bg-primary-500 hover:bg-primary-600 text-white'
+            : 'hover:border-primary-400 border border-gray-300 text-gray-500'
+        "
+        class="flex h-9 w-9 items-center justify-center rounded-xl transition"
+      >
+        <i class="fa-solid fa-grip text-sm"></i>
+      </button>
+
+      <!-- List View -->
+      <button
+        (click)="setDisplay('list')"
+        [class]="
+          display() === 'list'
+            ? 'bg-primary-500 hover:bg-primary-600 text-white'
+            : 'hover:border-primary-400 border border-gray-300 text-gray-500'
+        "
+        class="flex h-9 w-9 items-center justify-center rounded-xl transition"
+      >
+        <i class="fa-solid fa-list text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Right: Sort By -->
+    <div class="flex items-center gap-2">
+      <span class="text-sm text-gray-500">Sort by:</span>
+
+      <select
+        [formControl]="selectInput"
+        class="focus:border-primary-400 rounded-xl border border-gray-300 px-5.5 py-2 text-sm text-gray-600 transition outline-none focus:ring-0"
+      >
+        <option value="relevance" selected>Relevance</option>
+        <option value="price">Price: Low to High</option>
+        <option value="-price">Price: High to Low</option>
+        <option value="-ratingsAverage">Rating: High to Low</option>
+        <option value="title">Name: A to Z</option>
+        <option value="-title">Name: Z to A</option>
+      </select>
+    </div>
+  </div>
+</section>

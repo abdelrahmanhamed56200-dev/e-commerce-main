@@ -1,0 +1,95 @@
+<section class="flex flex-col gap-8">
+  <div class="flex flex-col gap-10 md:flex-row md:items-start">
+    <div class="flex min-w-fit flex-col items-center gap-1">
+      <p class="text-secondary-900 text-5xl font-extrabold">{{ ratingsAverage() }}</p>
+
+      <!-- stars -->
+      <div class="flex items-center gap-0.5 text-yellow-400">
+        @for (item of [1, 2, 3, 4, 5]; track $index) {
+          @if (ratingsAverage() >= $index + 1) {
+            <i class="fa-solid fa-star"></i>
+          } @else if (ratingsAverage() > $index && $index + 1 > ratingsAverage()) {
+            <i class="fa-solid fa-star-half-stroke"></i>
+          } @else {
+            <i class="fa-regular fa-star text-gray-300"></i>
+          }
+        }
+      </div>
+
+      <p class="text-secondary-400 text-center text-xs">Based on {{ ratingsQuantity() }} reviews</p>
+    </div>
+
+    <!-- Reviews Percentage -->
+    <div #scrollTo class="flex flex-1 flex-col gap-3">
+      @for (item of ratings; track $index) {
+        <div class="flex items-center gap-3">
+          <span class="w-10 shrink-0 text-xs text-gray-500">{{ item }} star</span>
+          <div class="h-2 flex-1 overflow-hidden rounded-full bg-gray-200">
+            <div
+              [style]="`width: ${allReviewsPercentage()[item]}%`"
+              class="h-full rounded-full bg-yellow-400 transition-all duration-300"
+            ></div>
+          </div>
+          <span class="w-8 shrink-0 text-right text-xs text-gray-500">
+            {{ allReviewsPercentage()[item] }}%</span
+          >
+        </div>
+      }
+    </div>
+  </div>
+
+  <!--  Reviews  -->
+  @if (reviews() && reviews().length > 0) {
+    <div class="grid gap-4">
+      @for (review of reviews(); track $index) {
+        <app-review-card [review]="review" />
+      }
+      @if (isLoading() || isLoading()) {
+        @for (item of [1, 2]; track $index) {
+          <app-review-card-skeleton />
+        }
+      }
+
+      @if (!isWriteNewReview()) {
+        <button
+          (click)="onWriteNewReview()"
+          class="text-primary-500 hover:text-primary-700 cursor-pointer text-sm font-semibold transition"
+        >
+          Write a Review
+        </button>
+      }
+    </div>
+  } @else {
+    <div class="flex flex-col items-center gap-3 py-6">
+      <i class="fa-regular fa-star text-5xl text-gray-300"></i>
+      <p class="text-center text-sm text-gray-400">Customer reviews will be displayed here.</p>
+      @if (!isWriteNewReview()) {
+        <!-- Load More Review btn -->
+        <button
+          (click)="onWriteNewReview()"
+          class="text-primary-500 hover:text-primary-700 cursor-pointer text-sm font-semibold transition"
+        >
+          Write a Review
+        </button>
+      }
+    </div>
+  }
+
+  <!-- Write New Review card -->
+  @if (isWriteNewReview()) {
+    <app-create-edit-review (onSubmit)="onCreteReview($event)" (onCancel)="onCancelCreteReview()" />
+  }
+
+  <!-- Load More Review btn -->
+  @if (reviews().length < ratingsQuantity()) {
+    <button
+      (click)="onLoadMoreReview()"
+      class="text-primary-500 hover:text-primary-700 cursor-pointer text-sm font-semibold transition"
+    >
+      Show More
+      @if (isLoading()) {
+        <i class="fa-solid fa-spinner fa-spin ms-1"></i>
+      }
+    </button>
+  }
+</section>

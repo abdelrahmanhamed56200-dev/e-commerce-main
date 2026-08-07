@@ -1,0 +1,27 @@
+<app-breadcrumbs-card
+  [iconConfig]="{ value: 'fa-solid fa-file-contract', type: 'icon' }"
+  description="Last updated: February 2026"
+  pageTitle="Terms of Service"
+  title="Terms of Service"
+/>
+<!-- notice-card -->
+<div class="container grid gap-5 px-6 py-5 lg:gap-7">
+  <app-static-notice-card
+    [icon]="termsAndConditions().notice.icon"
+    [title]="termsAndConditions().notice.title"
+    [text]="termsAndConditions().notice.text"
+    [mainColor]="'amber'"
+  />
+
+  <!-- info-card -->
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-7">
+    @for (article of termsAndConditions().articles; track $index) {
+      <app-static-info-card [articleId]="$index + 1" [article]="article" />
+    }
+  </div>
+
+  <app-static-privacy-and-term-action-buttons
+    [paths]="['/privacy']"
+    pathName="View privacy of Service"
+  />
+</div>

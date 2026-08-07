@@ -1,0 +1,43 @@
+@if (isLoading() || orders().length > 0) {
+  <app-breadcrumbs-card
+    title="My Orders"
+    [description]="`Track and manage your ${orders().length} orders`"
+    pageTitle="My Orders"
+    buttonIcon="add"
+    [iconConfig]="{ type: 'icon', value: 'fa-solid fa-box' }"
+    activeLinkClass="text-secondary-600"
+    containerClass="shadow-sm py-9!"
+    iconClass="bg-primary-500"
+    linkClass="text-secondary-400 hover:text-secondary-600"
+    separatorClass="text-secondary-500"
+    titleClass="text-secondary-500"
+    descriptionClass="text-sm! font-semibold text-secondary-400"
+  />
+}
+
+<!-- all orders -->
+@if (orders().length > 0 && !isLoading()) {
+  <app-orders-all-orders [orders]="orders()" />
+}
+
+<!-- No orders yet -->
+<div class="mt-16">
+  <app-not-found-produces
+    [isEmpty]="orders().length === 0 && !isLoading()"
+    title="No orders yet"
+    text="When you place orders, they'll appear here
+so you can track them."
+    buttonText="Start Shopping"
+    (onClearFilters)="startShopping()"
+  />
+</div>
+
+<!-- Order Card Skeleton -->
+@if (isLoading()) {
+  <section class="px-6">
+    <div class="container flex flex-col gap-3">
+      <app-orders-order-card-skeleton />
+      <app-orders-order-card-skeleton />
+    </div>
+  </section>
+}

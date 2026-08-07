@@ -1,0 +1,44 @@
+<!-- breadcrumbs -->
+<app-breadcrumbs-card
+  [iconConfig]="{ type: 'icon', value: 'fa-solid fa-cart-shopping' }"
+  [iconClass]="'bg-primary-500'"
+  containerClass="bg-white py-6! shadow-md"
+  titleClass="text-secondary-500"
+  descriptionClass="text-secondary-300 text-sm! mt-1"
+  title="Shopping Cart"
+  [description]="'You have ' + numberOfItems() + ' items in your cart'"
+  pageTitle="Shopping Cart"
+  textColor="text-secondary-500"
+  bgCalor="bg-white"
+  linkClass="text-secondary-400 hover:text-secondary-600"
+  separatorClass="text-secondary-400"
+  activeLinkClass="text-secondary-600 font-semibold"
+/>
+
+<section class="px-6 py-5">
+  <div class="container">
+    @if (isFirstLoad() || numberOfItems() > 0) {
+      <div class="grid grid-cols-12 gap-5">
+        <div class="col-span-12 lg:col-span-8">
+          <!-- Cart Item Card -->
+          <app-cart-all-cards [products]="products()" />
+        </div>
+        <!-- Order Summary Card -->
+        <div class="col-span-12 lg:col-span-4">
+          <div class="sticky top-20">
+            <app-cart-order-summary-card
+              [totalPrice]="totalPrice()"
+              [numberOfItems]="products().length"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <app-cart-actions />
+    } @else {
+      <!-- Cart Empty -->
+      <app-cart-empty />
+    }
+  </div>
+</section>

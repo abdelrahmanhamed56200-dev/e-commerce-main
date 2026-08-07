@@ -1,0 +1,23 @@
+<!-- Header -->
+<app-profile-sittings-header />
+
+<!-- change user info -->
+<app-profile-sittings-card
+  iconContainerClass="bg-primary-100"
+  iconClass="fa-solid fa-user text-primary-600"
+  title="Profile Information"
+  text="Update your personal details"
+>
+  <app-profile-info-form />
+  <app-profile-user-info />
+</app-profile-sittings-card>
+
+<!-- change password -->
+<app-profile-sittings-card
+  iconContainerClass="bg-orange-100"
+  iconClass="fa-solid fa-lock text-orange-500"
+  title="Change Password"
+  text="Update your account password"
+>
+  <app-profile-password-form />
+</app-profile-sittings-card>

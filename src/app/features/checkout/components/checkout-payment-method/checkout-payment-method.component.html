@@ -1,0 +1,155 @@
+<div class="overflow-hidden rounded-2xl border border-gray-100 shadow-sm">
+  <!-- Header -->
+  <div class="bg-primary-500 px-5 py-4">
+    <h3 class="flex items-center gap-2 text-base font-bold text-white">
+      <i class="fa-solid fa-wallet text-sm"></i> Payment Method
+    </h3>
+    <p class="mt-0.5 text-sm text-white/80">Choose how you'd like to pay</p>
+  </div>
+
+  <!-- Options -->
+  <form [formGroup]="paymentForm" class="flex flex-col gap-3 p-4">
+    <!-- Cash on Delivery (selected) -->
+    <label
+      for="cash"
+      [class]="
+        paymentTypeValue() === 'cash'
+          ? 'border-primary-400 bg-primary-50 border-2'
+          : 'hover:border-primary-300 border border-gray-200 bg-white'
+      "
+      class="flex cursor-pointer items-center gap-4 rounded-2xl p-4 transition duration-300"
+    >
+      <!-- icon -->
+      <div
+        [class]="
+          paymentTypeValue() === 'cash'
+            ? 'bg-primary-500 text-white'
+            : 'text-secondary-400 bg-gray-100'
+        "
+        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition duration-300"
+      >
+        <i class="fa-solid fa-money-bill-wave text-lg"></i>
+      </div>
+
+      <!-- description -->
+      <div class="flex-1">
+        <p
+          [class]="paymentTypeValue() === 'cash' ? 'text-primary-700' : 'text-secondary-700'"
+          class="font-bold transition duration-300"
+        >
+          Cash on Delivery
+        </p>
+
+        <p
+          [class]="paymentTypeValue() === 'cash' ? 'text-secondary-500' : 'text-secondary-400'"
+          class="mt-0.5 text-sm transition duration-300"
+        >
+          Pay when your order arrives at your doorstep
+        </p>
+      </div>
+
+      <!-- checkmark -->
+      <div
+        [class]="paymentTypeValue() === 'cash' ? 'bg-primary-500' : 'border-2 border-gray-300'"
+        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition duration-300"
+      >
+        @if (paymentTypeValue() === 'cash') {
+          <i class="fa-solid fa-check text-xs text-white"></i>
+        }
+      </div>
+
+      <!-- input -->
+      <input
+        id="cash"
+        formControlName="paymentType"
+        type="radio"
+        name="paymentType"
+        value="cash"
+        class="hidden"
+      />
+    </label>
+
+    <!-- Pay Online -->
+    <label
+      for="card"
+      [class]="
+        paymentTypeValue() === 'card'
+          ? 'border-primary-400 bg-primary-50 border-2'
+          : 'hover:border-primary-300 border border-gray-200 bg-white'
+      "
+      class="flex cursor-pointer items-center gap-4 rounded-2xl p-4 transition duration-300"
+    >
+      <!-- icon -->
+      <div
+        [class]="
+          paymentTypeValue() === 'card'
+            ? 'bg-primary-500 text-white'
+            : 'text-secondary-400 bg-gray-100'
+        "
+        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition duration-300"
+      >
+        <i class="fa-solid fa-credit-card text-lg"></i>
+      </div>
+
+      <!-- description -->
+      <div class="flex-1">
+        <p
+          [class]="paymentTypeValue() === 'card' ? 'text-primary-700' : 'text-secondary-700'"
+          class="font-bold transition duration-300"
+        >
+          Pay Online
+        </p>
+
+        <p
+          [class]="paymentTypeValue() === 'card' ? 'text-secondary-500' : 'text-secondary-400'"
+          class="mt-0.5 text-sm transition duration-300"
+        >
+          Secure payment with Credit/Debit Card via Stripe
+        </p>
+        <!-- Card logos -->
+        <div class="mt-2 flex items-center gap-1.5">
+          <span class="text-xl text-blue-600"><i class="fa-brands fa-cc-visa"></i></span>
+          <span class="text-xl text-red-500"><i class="fa-brands fa-cc-mastercard"></i></span>
+          <span class="text-xl text-blue-800"><i class="fa-brands fa-cc-amex"></i></span>
+        </div>
+      </div>
+
+      <!-- checkmark -->
+      <div
+        [class]="paymentTypeValue() === 'card' ? 'bg-primary-500' : 'border-2 border-gray-300'"
+        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition duration-300"
+      >
+        @if (paymentTypeValue() === 'card') {
+          <i class="fa-solid fa-check text-xs text-white"></i>
+        }
+      </div>
+
+      <!-- input -->
+      <input
+        id="card"
+        formControlName="paymentType"
+        type="radio"
+        name="paymentType"
+        value="card"
+        class="hidden"
+      />
+    </label>
+
+    <!-- Secure & Encrypted -->
+    <div
+      class="bg-primary-50 border-primary-100 flex items-center gap-3 rounded-2xl border px-4 py-3"
+    >
+      <div
+        class="bg-primary-100 border-primary-200 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border"
+      >
+        <i class="fa-solid fa-shield-halved text-primary-500"></i>
+      </div>
+      <div>
+        <p class="text-secondary-700 font-bold">Secure & Encrypted</p>
+        <p class="text-primary-500 text-sm">
+          Your payment info is protected with 256-bit SSL encryption
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

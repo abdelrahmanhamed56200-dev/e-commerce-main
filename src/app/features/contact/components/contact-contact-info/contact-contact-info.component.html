@@ -1,0 +1,21 @@
+<div class="flex flex-col gap-4">
+  @for (item of contactInfo; track $index) {
+    <div class="flex items-start gap-4 rounded-2xl border border-gray-100 p-5 shadow">
+      <div class="bg-primary-100/50 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
+        <i [class]="item.iconClass" class="text-primary-500"></i>
+      </div>
+      <div class="flex flex-col gap-1">
+        <h2 class="text-secondary-800 text-sm font-bold">{{ item.title }}</h2>
+        @for (item of item.descriptions; track $index) {
+          <p class="text-secondary-400 text-xs">{{ item }}</p>
+        }
+
+        @for (item of item.links; track $index) {
+          <a [href]="item.url" class="text-primary-500 text-sm font-semibold hover:underline">
+            {{ item.value }}
+          </a>
+        }
+      </div>
+    </div>
+  }
+</div>

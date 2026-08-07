@@ -1,0 +1,100 @@
+<div class="border-t border-gray-100 p-5 transition-colors duration-300 hover:bg-gray-50">
+  <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <!-- Product Info -->
+    <div class="flex flex-1 items-center gap-4">
+      <a
+        [routerLink]="['/products', wishlistProduct().id, wishlistProduct().slug]"
+        class="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gray-100"
+      >
+        <img
+          [src]="wishlistProduct().imageCover"
+          [alt]="wishlistProduct().title"
+          class="h-16 w-16 rounded-xl object-contain transition-transform duration-300 hover:scale-110"
+        />
+      </a>
+      <div>
+        <a
+          [routerLink]="['/products', wishlistProduct().id, wishlistProduct().slug]"
+          class="hover:text-primary-500 text-secondary-800 transition-colors duration-300"
+        >
+          <h3 class="line-clamp-2 font-semibold">
+            {{ wishlistProduct().title }}
+          </h3>
+        </a>
+        <p class="text-secondary-400 mt-0.5 text-sm">{{ wishlistProduct().category.name }}</p>
+      </div>
+    </div>
+
+    <!-- Price -->
+    <div class="flex items-center gap-2 md:flex-col md:items-start md:px-5">
+      <span class="text-secondary-400 text-sm md:hidden">Price:</span>
+      <div>
+        @if (wishlistProduct().priceAfterDiscount) {
+          <p class="text-secondary-500 font-bold">{{ wishlistProduct().priceAfterDiscount }} EGP</p>
+          <p class="text-secondary-400 text-sm line-through">{{ wishlistProduct().price }} EGP</p>
+        } @else {
+          <p class="text-secondary-800 text-sm font-bold">{{ wishlistProduct().price }} EGP</p>
+        }
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="flex items-center gap-2 md:px-5">
+      <span class="text-secondary-400 text-xs md:hidden">Status:</span>
+      <span
+        class="bg-primary-50 text-primary-500 border-primary-100 flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold"
+      >
+        @if (isInCart()) {
+          <i class="fa-solid fa-cart-shopping text-xs"></i> In Cart
+        } @else {
+          <span class="bg-primary-500 block h-1.5 w-1.5 rounded-full"></span> In Stock
+        }
+      </span>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2 md:w-48">
+      @if (isInCart()) {
+        <a
+          routerLink="/cart"
+          class="text-secondary-600 hover:border-primary-400 hover:text-primary-500 flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium transition duration-300"
+        >
+          <span class="hidden sm:inline">
+            <i class="fa-solid fa-check text-xs"></i>
+          </span>
+          View Cart
+        </a>
+      } @else {
+        <button
+          (click)="onAddProductToCart()"
+          class="bg-primary-500 hover:bg-primary-600 flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white transition duration-300"
+        >
+          <span class="hidden sm:inline">
+            @if (isAddingToCart()) {
+              <i class="fa-solid fa-spinner fa-spin text-xs"></i>
+            } @else {
+              <i class="fa-solid fa-cart-shopping text-xs"></i>
+            }
+          </span>
+          @if (isAddingToCart()) {
+            adding to cart
+          } @else {
+            Add to Cart
+          }
+        </button>
+      }
+
+      <!-- Delete -->
+      <button
+        (click)="onRemoveProductFromWishlist()"
+        class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-gray-200 text-gray-400 transition duration-300 hover:border-red-300 hover:bg-red-50 hover:text-red-500"
+      >
+        @if (isRemovingFromWishlist()) {
+          <i class="fa-solid fa-spinner fa-spin text-xs"></i>
+        } @else {
+          <i class="fa-solid fa-trash text-sm"></i>
+        }
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<section class="rounded-2xl border border-gray-100 p-3 shadow-sm">
+  <!-- thumbs-swiper=".thumbs-swiper" -->
+  <swiper-container #mainSwiper class="main-swiper" init="false">
+    @for (img of imgs(); track $index) {
+      <swiper-slide>
+        <a target="_blank" [href]="img" class="block overflow-hidden rounded-2xl">
+          <img
+            class="h-full max-h-100 w-full object-contain"
+            [src]="img"
+            [alt]="productTitle() + $index + 1"
+          />
+        </a>
+      </swiper-slide>
+    }
+  </swiper-container>
+
+  <div class="mx-auto max-w-70">
+    <swiper-container #thumbsSwiper init="false" class="thumbs-swiper">
+      @for (img of imgs(); track $index) {
+        <swiper-slide>
+          <img class="h-full w-full object-cover" [src]="img" [alt]="productTitle() + $index + 1" />
+        </swiper-slide>
+      }
+    </swiper-container>
+  </div>
+</section>

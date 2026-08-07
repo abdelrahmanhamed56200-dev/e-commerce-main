@@ -1,0 +1,137 @@
+<section class="py-6 pb-15">
+  <div class="container">
+    <div
+      class="bg-primary-100/10 border-primary-100 shadow-primary-100 grid grid-cols-1 items-stretch gap-8 rounded-4xl border p-8 shadow-md md:p-10 lg:grid-cols-5"
+    >
+      <div class="lg:col-span-3">
+        <div class="mb-6 flex items-center gap-3">
+          <div
+            class="bg-primary-500 shadow-primary-100 flex h-12 w-12 items-center justify-center rounded-xl text-xl text-white shadow-lg"
+          >
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div>
+            <h4 class="text-md text-primary-500 font-extrabold tracking-widest uppercase">
+              Newsletter
+            </h4>
+            <p class="text-secondary-400 text-sm font-medium">50,000+ subscribers</p>
+          </div>
+        </div>
+
+        <h2 class="text-secondary-800 mb-4 text-3xl leading-tight font-bold md:text-4xl">
+          Get the Freshest Updates <span class="text-primary-500">Delivered Free</span>
+        </h2>
+
+        <p class="text-secondary-500 mb-8 font-medium">
+          Weekly recipes, seasonal offers & exclusive member perks.
+        </p>
+
+        <div class="mb-10 flex flex-wrap gap-3">
+          <span
+            class="text-secondary-600 flex items-center gap-2 rounded-full border border-gray-100 bg-white px-4 py-2 text-xs font-semibold shadow-sm"
+          >
+            <i class="fa-solid fa-leaf text-primary-500"></i> Fresh Picks Weekly
+          </span>
+          <span
+            class="text-secondary-600 flex items-center gap-2 rounded-full border border-gray-100 bg-white px-4 py-2 text-xs font-semibold shadow-sm"
+          >
+            <i class="fa-solid fa-truck text-primary-500"></i> Free Delivery Codes
+          </span>
+          <span
+            class="text-secondary-600 flex items-center gap-2 rounded-full border border-gray-100 bg-white px-4 py-2 text-xs font-semibold shadow-sm"
+          >
+            <i class="fa-solid fa-tag text-primary-500"></i> Members-Only Deals
+          </span>
+        </div>
+
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row">
+          <input
+            #emailInput
+            type="email"
+            placeholder="you@example.com"
+            required
+            class="focus:border-primary-500 focus:shadow-primary-200 flex-1 rounded-2xl border border-gray-200 px-6 py-4 text-gray-600 transition-all outline-none focus:shadow-md"
+          />
+          <button
+            (click)="emailInput.value = ''"
+            class="bg-primary-500 hover:bg-primary-500 flex items-center justify-center gap-2 rounded-2xl px-8 py-4 font-bold text-white transition-all"
+          >
+            Subscribe <i class="fa-solid fa-arrow-right text-sm"></i>
+          </button>
+        </div>
+        <p class="text-secondary-400 ml-1 flex items-center gap-1 text-[12px]">
+          <span class="text-orange-400">✨</span> Unsubscribe anytime. No spam, ever.
+        </p>
+      </div>
+
+      <div
+        class="bg-secondary-700 relative w-full overflow-hidden rounded-4xl p-10 font-sans text-white shadow-2xl lg:col-span-2"
+      >
+        <div
+          class="bg-primary-500 pointer-events-none absolute -top-20 left-20 h-64 w-64 rounded-full opacity-[0.2] blur-[80px]"
+        ></div>
+
+        <div
+          class="bg-primary-500 pointer-events-none absolute right-20 -bottom-20 h-64 w-64 rounded-full opacity-[0.2] blur-[80px]"
+        ></div>
+
+        <div class="relative z-10">
+          <span
+            class="bg-secondary-500 text-primary-500 text-2xs border-primary-600 inline-flex items-center rounded-full border px-3 py-1.5 font-bold tracking-wider uppercase"
+          >
+            <i class="fa-solid fa-mobile-screen-button mr-2"></i> Mobile App
+          </span>
+
+          <h3 class="mt-8 mb-4 text-3xl font-bold">Shop Faster on Our App</h3>
+
+          <p class="mb-10 text-[15px] leading-relaxed text-gray-400">
+            Get app-exclusive deals & 15% off your first order.
+          </p>
+
+          <div class="space-y-4">
+            <a
+              routerLink="/"
+              class="bg-secondary-600 hover:bg-secondary-500 border-secondary-300/30 group flex items-center gap-4 rounded-2xl border p-4 backdrop-blur-sm transition-all"
+            >
+              <i class="fa-brands fa-apple text-3xl transition-transform group-hover:scale-110"></i>
+              <div class="text-left">
+                <p class="text-2xs text-secondary-300 mb-1 leading-none font-bold uppercase">
+                  Download on
+                </p>
+                <p class="text-lg font-bold">App Store</p>
+              </div>
+            </a>
+
+            <a
+              routerLink="/"
+              class="bg-secondary-600 hover:bg-secondary-500 border-secondary-300/30 group flex items-center gap-4 rounded-2xl border p-4 backdrop-blur-sm transition-all"
+            >
+              <i
+                class="fa-brands fa-google-play text-2xl transition-transform group-hover:scale-110"
+              ></i>
+              <div class="text-left">
+                <p class="text-2xs text-secondary-300 mb-1 leading-none font-bold uppercase">
+                  Get it on
+                </p>
+                <p class="text-lg font-bold">Google Play</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="mt-10 flex items-center gap-3">
+            <div class="flex text-xs text-[#facc15]">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-sm font-bold text-white">
+              4.9 <span class="text-secondary-300 ml-1 font-normal">· 100K+ downloads</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

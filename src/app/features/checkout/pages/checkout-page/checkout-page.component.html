@@ -1,0 +1,60 @@
+@if (isLoadingData()) {
+  <div class="flex min-h-screen flex-col items-center justify-center gap-2">
+    <span class="bg-primary-100 flex h-20 w-20 items-center justify-center rounded-full">
+      <i class="fa-solid fa-spinner text-primary-500 animate-spin text-4xl"></i>
+    </span>
+    <h2 class="text-secondary-500 font-bold">Loading checkout...</h2>
+    <p class="text-secondary-400 text-sm">Preparing your order</p>
+  </div>
+} @else if (isCartEmpty()) {
+  <div class="mt-15">
+    <app-cart-empty />
+  </div>
+} @else {
+  <app-breadcrumbs-card
+    title="Complete Your Order"
+    description="Review your items and complete your purchase"
+    pageTitle="Checkout"
+    buttonIcon="add"
+    [iconConfig]="{ type: 'icon', value: 'fa-solid fa-receipt' }"
+    activeLinkClass="text-secondary-600"
+    containerClass="py-9! shadow-sm"
+    iconClass="bg-primary-500"
+    linkClass="text-secondary-400 hover:text-secondary-600"
+    separatorClass="text-secondary-500"
+    titleClass="text-secondary-500"
+    descriptionClass="text-sm! font-semibold text-secondary-400"
+    [breadcrumbs]="[{ label: 'Cart', link: '/cart' }]"
+  >
+    <a
+      routerLink="/cart"
+      class="group text-secondary-400 hover:text-primary-600 hover:bg-primary-100/50 flex cursor-pointer items-center gap-2 self-end rounded p-3 transition-colors duration-300"
+    >
+      <i class="fa-solid fa-arrow-left transition duration-300 group-hover:-translate-x-2"></i>
+      Back to Cart
+    </a>
+  </app-breadcrumbs-card>
+
+  <div class="px-6 py-5">
+    <div class="container grid gap-4 lg:grid-cols-[8fr_4fr]">
+      <div>
+        <!-- Shipping Address Section -->
+        <app-checkout-shipping-address
+          [addressForm]="addressForm"
+          [userAddresses]="userAddresses()"
+        />
+
+        <!-- Payment Method Section -->
+        <app-checkout-payment-method (onPaymentTypeChange)="onPaymentTypeChange($event)" />
+      </div>
+
+      <!-- Order Summary Checkout -->
+      <app-checkout-order-summary
+        [cartRes]="cartRes()"
+        [paymentType]="paymentType()"
+        (onCheckout)="onCheckout()"
+        [isLoading]="isLoading()"
+      />
+    </div>
+  </div>
+}

@@ -1,0 +1,38 @@
+<!-- breadcrumbs -->
+<app-breadcrumbs-card
+  [iconConfig]="{ type: 'icon', value: 'fa-solid fa-heart text-red-500!' }"
+  [iconClass]="'bg-red-100'"
+  containerClass="bg-white py-6! shadow-md"
+  titleClass="text-secondary-500"
+  descriptionClass="text-secondary-300 text-sm! mt-1"
+  title="My Wishlist"
+  [description]="wishlistCount() + '  items saved'"
+  pageTitle="Wishlist"
+  textColor="text-secondary-500"
+  bgCalor="bg-white"
+  linkClass="text-secondary-400 hover:text-secondary-600"
+  separatorClass="text-secondary-400"
+  activeLinkClass="text-secondary-600 font-semibold"
+/>
+
+<section class="px-6 py-5">
+  <div class="container">
+    @if (!isEmpty()) {
+      <section class="rounded border border-gray-100 shadow-sm">
+        <header class="hidden grid-cols-12 bg-gray-100 p-5 md:grid">
+          <p class="text-secondary-400 col-span-6">Product</p>
+          <p class="text-secondary-400 col-span-2 text-center">Price</p>
+          <p class="text-secondary-400 col-span-2 text-center">Status</p>
+          <p class="text-secondary-400 col-span-2 text-center">Actions</p>
+        </header>
+
+        <app-wishlist-all-cards [wishlistProducts]="wishlistProducts()" />
+      </section>
+
+      <!-- Actions -->
+      <app-wishlist-actions />
+    } @else {
+      <app-wishlist-empty-wishlist />
+    }
+  </div>
+</section>
